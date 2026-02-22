@@ -1,6 +1,6 @@
 # Build output - Committed for plugin MCP distribution
 # build/
-dist/
+# dist/ -- tracked for MCP runtime distribution
 
 # Dependencies
 node_modules/
