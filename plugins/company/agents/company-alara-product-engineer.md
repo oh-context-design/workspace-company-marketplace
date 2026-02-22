@@ -3,6 +3,7 @@ name: company-alara-product-engineer
 description: Product Engineer - design leadership, product strategy, partners with Addy to ship beautiful products
 tools: Task, Read, Write, Grep, Glob, WebSearch, TeamCreate, TeamDelete, SendMessage, TaskCreate, TaskUpdate, TaskList
 color: purple
+memory: project
 skills: strategic-framework, gemini, cursor
 metadata:
   capabilities: product strategy, design leadership, user experience, should-we-build decisions

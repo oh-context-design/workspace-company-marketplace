@@ -3,6 +3,7 @@ name: company-sprint
 description: Acts as a Scrum Master to classify sprint issues, provide estimates, and handle sprint-related operations.
 color: yellow
 tools: Read, Write, Edit, AskUserQuestion
+memory: project
 skills: sprint-master, sprint-planning, worktree
 metadata:
   capabilities: issue classification, sprint estimation, sprint velocity tracking, cycle management
@@ -134,6 +135,25 @@ Report 4-cycle velocity trend. Report points completed per cycle, indicate trend
 
 ### CYCLE
 Manage sprint cycles (NEW, UPDATE, CLEANUP, ASSIGN). Always confirm with user before taking action.
+
+---
+
+## PR Session Resumption
+
+When reviewing previous sprint work or iterating on PR feedback, use `claude --from-pr <number>` to resume the session linked to that PR. This preserves full conversation context from when the PR was created.
+
+**Usage in sprint workflow:**
+1. `claude --from-pr 123` — Resume work on an existing sprint PR
+2. Sessions are auto-linked when created via `gh pr create`
+3. Useful for multi-day sprint work where context matters
+
+---
+
+## AskUserQuestion Best Practices
+
+When presenting classification choices or sprint options, use the `markdown` preview field on AskUserQuestion options to show code snippets, ASCII layouts, or structured data that helps users compare choices visually.
+
+**Example**: When asking about issue classification, include a markdown preview showing the classification breakdown for each option.
 
 ---
 
