@@ -1,0 +1,22 @@
+# Source (compiled to dist/)
+src/
+
+# Config
+tsconfig.json
+.gitignore
+.prettierrc
+.eslintrc*
+
+# Tests
+*.test.ts
+*.spec.ts
+coverage/
+vitest.config.ts
+
+# IDE
+.vscode/
+.idea/
+
+# Development
+bun.lockb
+.env*

@@ -1,0 +1,55 @@
+{
+  "name": "@cocal/linear-cycles-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Linear cycle management - create, update, delete cycles and get metrics",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "linear-cycles-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "bun --watch src/index.ts",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "linear",
+    "cycles",
+    "project-management",
+    "model-context-protocol"
+  ],
+  "author": "pixelbendr",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cocal/linear-cycles-mcp"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "dotenv": "^17.2.3",
+    "graphql-request": "^6.1.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

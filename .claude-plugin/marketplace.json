@@ -1,0 +1,48 @@
+{
+  "name": "workspace-company",
+  "owner": {
+    "name": "pixelbendr",
+    "email": "evans.attafuah@gmail.com"
+  },
+  "metadata": {
+    "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, Araba server assistant",
+    "version": "1.0.0",
+    "category": "company"
+  },
+  "plugins": [
+    {
+      "name": "company",
+      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba assistant",
+      "source": "./plugins/company",
+      "version": "3.0.0",
+      "strict": false,
+      "agents": [
+        "./agents/company-board.md",
+        "./agents/company-addy-engineering-lead.md",
+        "./agents/company-alara-product-engineer.md",
+        "./agents/company-sprint.md",
+        "./agents/company-assistant-araba.md"
+      ],
+      "commands": [
+        "./commands/board.md",
+        "./commands/addy.md",
+        "./commands/alara.md",
+        "./commands/sprint.md",
+        "./commands/araba.md"
+      ],
+      "skills": [
+        "./skills/strategic-framework",
+        "./skills/sprint-master",
+        "./skills/sprint-planning",
+        "./skills/worktree",
+        "./skills/araba-knowledge"
+      ],
+      "mcpServers": {
+        "linear-cycles": {
+          "command": "node",
+          "args": ["${CLAUDE_PLUGIN_ROOT}/skills/linear-cycles-mcp/dist/index.js"]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "version": "1.1.0",
+  "description": "Single source of truth for company agent structure",
+
+  "hierarchy": {
+    "board": {
+      "agent": "company-board",
+      "color": "cyan",
+      "description": "Design-First Executive Council",
+      "members": [
+        { "role": "CEO", "focus": "Strategy", "sponsors": null },
+        { "role": "CTO", "focus": "Technology", "sponsors": "addy" },
+        { "role": "CFO", "focus": "Finance", "sponsors": null },
+        { "role": "CDO", "focus": "Design Excellence", "sponsors": "alara" }
+      ]
+    }
+  },
+
+  "leads": {
+    "alara": {
+      "agent": "company-alara-product-engineer",
+      "title": "Product Engineer",
+      "color": "purple",
+      "sponsor": "CDO",
+      "peer": "addy",
+      "manages": ["design reviewers", "content team"],
+      "responsibilities": [
+        "Design leadership",
+        "Product strategy ('should we build?')",
+        "Jobs/Ive/Rams principles",
+        "Board participation"
+      ]
+    },
+    "addy": {
+      "agent": "company-addy-engineering-lead",
+      "title": "Engineering Lead",
+      "color": "blue",
+      "sponsor": "CTO",
+      "peer": "alara",
+      "manages": ["swift", "python", "typescript"],
+      "responsibilities": [
+        "Engineering leadership",
+        "Force multiplier",
+        "Technical excellence",
+        "Board participation"
+      ]
+    }
+  },
+
+  "teams": {
+    "design_reviewers": {
+      "reports_to": "alara",
+      "plugin": "design",
+      "members": [
+        { "agent": "design-ux-reviewer", "focus": "User flows, information architecture" },
+        { "agent": "design-ui-web-reviewer", "focus": "Accessibility, semantic HTML, React" },
+        { "agent": "design-motion-reviewer", "focus": "Animation timing, physics, performance" },
+        { "agent": "design-system-web-reviewer", "focus": "Tokens, Tailwind, visual consistency" },
+        { "agent": "design-swift-ui-reviewer", "focus": "SwiftUI implementation, iOS HIG" },
+        { "agent": "design-swift-ux-reviewer", "focus": "iOS navigation, user flows" },
+        { "agent": "design-swift-motion-reviewer", "focus": "Springs, transitions, 60fps" },
+        { "agent": "design-swift-system-reviewer", "focus": "iOS tokens, Dynamic Type" }
+      ]
+    },
+    "content_team": {
+      "reports_to": "alara",
+      "plugin": "design",
+      "router": {
+        "agent": "content-strategist",
+        "color": "cyan",
+        "description": "Routes content requests to specialized copywriters. Never writes copy directly."
+      },
+      "copywriters": [
+        { "agent": "portfolio-copywriter", "color": "pink", "focus": "Personal voice, bios, About pages. Rauno/Emil/Paco/Maggie patterns." },
+        { "agent": "product-copywriter", "color": "pink", "focus": "App store, marketing, headlines. Apple/Ken Segall principles." },
+        { "agent": "brand-copywriter", "color": "pink", "focus": "Company voice, missions, taglines. Simon Sinek's Golden Circle." },
+        { "agent": "social-copywriter", "color": "pink", "focus": "Platform-native: Twitter, LinkedIn, Instagram, Threads." }
+      ]
+    },
+    "engineering_teams": {
+      "reports_to": "addy",
+      "members": [
+        { "plugin": "swift", "agents": ["swift-architect", "swift-engineer", "swift-code-reviewer", "swift-security-reviewer"] },
+        { "plugin": "python", "agents": ["python-architect", "python-engineer", "python-code-reviewer", "python-security-reviewer"] },
+        { "plugin": "typescript", "agents": ["typescript-architect", "typescript-engineer", "typescript-code-reviewer", "typescript-security-reviewer"] }
+      ]
+    }
+  },
+
+  "coordination": {
+    "sprint": {
+      "agent": "company-sprint",
+      "color": "cyan",
+      "orchestrates": ["addy", "alara"],
+      "escalates_to": "board",
+      "smart_detection": {
+        "simple": ["addy", "alara"],
+        "complex": ["board", "addy", "alara"]
+      }
+    }
+  },
+
+  "decision_tree": {
+    "engineering_questions": "addy → CTO (if escalated) → board",
+    "design_questions": "alara → CDO (if escalated) → board",
+    "product_strategy": "alara → board",
+    "cross_functional": "addy + alara → board (if conflict)",
+    "sprint_planning": "sprint → addy + alara → board (if complex)",
+    "content_requests": "content-strategist → [portfolio|product|brand|social]-copywriter"
+  }
+}
