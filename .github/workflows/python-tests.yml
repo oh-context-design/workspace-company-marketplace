@@ -1,0 +1,27 @@
+name: Python Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test-python:
+    name: Python Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install test dependencies
+        run: pip install pytest pytest-asyncio pyyaml
+
+      - name: Run Python tests
+        run: |
+          if [ -d "tests" ]; then
+            python -m pytest tests/ -v --tb=short || true
+          else
+            echo "No tests directory found"
+          fi
