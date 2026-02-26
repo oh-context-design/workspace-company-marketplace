@@ -13,9 +13,7 @@
     {
       "name": "company",
       "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba assistant",
-      "source": "./plugins/company",
-      "version": "3.0.0",
-      "strict": false,
+      "version": "3.0.1",
       "agents": [
         "./agents/company-board.md",
         "./agents/company-addy-engineering-lead.md",
