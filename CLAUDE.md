@@ -31,4 +31,4 @@ Single source of truth: plugins/company/skills/strategic-framework/team-members.
 
 Linear Cycles MCP: plugins/company/skills/linear-cycles-mcp/dist/index.js
 Build: cd plugins/company/skills/linear-cycles-mcp && bun run build
-Auth: reads LINEAR_API_KEY from ~/.claude/plugins/.env
+Auth: reads LINEAR_API_KEY from keychain (ohcontext-linear-api-key)
