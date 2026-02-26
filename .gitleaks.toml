@@ -1,0 +1,8 @@
+title = "Gitleaks config"
+
+[allowlist]
+  description = "Allow keychain command examples in agent docs"
+  paths = [
+    '''agents/.*\.md$''',
+    '''skills/.*/SKILL\.md$''',
+  ]
