@@ -143,7 +143,7 @@ def _resolve_path(
 def _validate_plugin(plugin: dict[str, Any], base_dir: Path) -> ValidationResult:
     """Validate a single plugin's declared paths."""
     name = plugin.get('name', 'unknown')
-    source = plugin.get('source', '')
+    source = plugin.get('source', f'./plugins/{name}')
 
     result = ValidationResult(plugin_name=name, plugin_source=source)
 
