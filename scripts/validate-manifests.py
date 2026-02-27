@@ -304,7 +304,7 @@ def validate_root_manifest() -> FullValidationResult:
     script_dir = Path(__file__).parent.resolve()
     repo_root = script_dir.parent
 
-    manifest_path = repo_root / 'marketplace.json'
+    manifest_path = repo_root / '.claude-plugin' / 'marketplace.json'
 
     if not manifest_path.exists():
         result = FullValidationResult(manifest_path='not found')
@@ -486,7 +486,7 @@ Examples:
                     }, indent=2))
                 else:
                     print("Error: Root manifest not found")
-                    print("  Expected: marketplace.json")
+                    print("  Expected: .claude-plugin/marketplace.json")
             return 2
 
     # Output results
