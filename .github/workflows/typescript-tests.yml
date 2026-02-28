@@ -1,25 +1,27 @@
 name: TypeScript Tests
-
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-
 jobs:
   test-typescript:
     name: TypeScript Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: oven-sh/setup-bun@v1
-
-      - name: Install dependencies
-        run: bun install || true
-
-      - name: Run TypeScript tests
+      - name: Find and test MCP servers
         run: |
-          if [ -d "tests" ] && [ -f "package.json" ]; then
-            bun test tests/ || true
+          found=0
+          for config in $(find plugins -name "vitest.config.ts" -not -path "*/node_modules/*" 2>/dev/null); do
+            dir=$(dirname "$config")
+            echo "::group::Testing $dir"
+            cd "$dir" && bun install && bunx vitest run
+            cd "$GITHUB_WORKSPACE"
+            echo "::endgroup::"
+            found=$((found + 1))
+          done
+          if [ "$found" -eq 0 ]; then
+            echo "No TypeScript test configs found - skipping"
           else
-            echo "No TypeScript tests found"
+            echo "Ran tests in $found project(s)"
           fi
