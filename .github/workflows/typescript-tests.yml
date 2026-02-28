@@ -15,7 +15,7 @@ jobs:
           for config in $(find plugins -name "vitest.config.ts" -not -path "*/node_modules/*" 2>/dev/null); do
             dir=$(dirname "$config")
             echo "::group::Testing $dir"
-            cd "$dir" && bun install && bun test
+            cd "$dir" && bun install && bunx vitest run
             cd "$GITHUB_WORKSPACE"
             echo "::endgroup::"
             found=$((found + 1))
