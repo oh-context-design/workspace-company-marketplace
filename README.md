@@ -12,7 +12,7 @@ Executive suite marketplace for Claude Code. Provides board orchestration, engin
 
 - Claude Code CLI
 - Node.js (for Linear Cycles MCP server)
-- `LINEAR_API_KEY` in `~/.claude/plugins/.env` (for sprint/cycle features)
+- `LINEAR_API_KEY` in macOS Keychain (resolved at runtime via Keychain Resolver MCP, for sprint/cycle features)
 
 ## Cross-Marketplace Dependencies
 
