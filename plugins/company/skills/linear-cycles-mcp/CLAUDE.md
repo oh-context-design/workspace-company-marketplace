@@ -17,7 +17,7 @@ src/
 ├── index.ts                 # CLI entry with stdio transport + FTUE
 ├── server.ts                # McpServer setup, tool registration
 ├── auth/
-│   └── keyManager.ts        # API key from ~/.claude/plugins/.env
+│   └── keyManager.ts        # API key from Keychain (primary) or .env (legacy fallback)
 ├── types/
 │   ├── cycle.ts             # Cycle domain types
 │   └── metrics.ts           # Metrics types
@@ -56,15 +56,15 @@ manage_auth({ action: "setup", apiKey: "lin_api_..." })
 
 ## Environment
 
-API key is configured in the global plugins .env (single source of truth):
+**Primary (recommended):** Store the API key in macOS Keychain and resolve at runtime via the Keychain Resolver MCP:
 
-```
-~/.claude/plugins/.env
-```
+1. **Retrieve via MCP**: Call `mcp__plugin_service_keychain-resolver__get_credential` with service `"linear"`
+2. **Export the result**: `export LINEAR_API_KEY=<returned value>`
+3. **If not found** -- present the `setup_instructions` from the MCP response to the user
 
-Add: `LINEAR_API_KEY=lin_api_your_key_here`
+**Legacy fallback:** `LINEAR_API_KEY` in `~/.claude/plugins/.env` is still supported but deprecated. Prefer keychain storage.
 
-Or use the `manage_auth` tool to configure it.
+Alternatively, use the `manage_auth` tool to configure it interactively.
 
 ## Development
 
@@ -116,7 +116,7 @@ Add to `~/.claude.json`:
       "command": "node",
       "args": ["/path/to/linear-cycles-mcp/dist/index.js"],
       "env": {
-        "LINEAR_API_KEY": "lin_api_..."
+        "LINEAR_API_KEY": "lin_api_...  (legacy fallback — prefer Keychain Resolver MCP)"
       }
     }
   }

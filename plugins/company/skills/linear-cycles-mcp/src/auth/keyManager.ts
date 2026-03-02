@@ -157,7 +157,7 @@ function keychainDelete(): boolean {
 const GLOBAL_ENV_PATH = path.join(os.homedir(), ".claude", "plugins", ".env");
 
 // Load from global location so process.env.LINEAR_API_KEY is populated
-config({ path: GLOBAL_ENV_PATH });
+config({ path: GLOBAL_ENV_PATH, quiet: true });
 
 // ---------------------------------------------------------------------------
 // Public API (same signatures as before)

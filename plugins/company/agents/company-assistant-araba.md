@@ -2,7 +2,7 @@
 name: company-assistant-araba
 description: Personal AI assistant server agent - status checks, data sync, file updates. Use when user mentions Araba, server status, or server checks.
 color: pink
-tools: Bash, Read, Write, AskUserQuestion
+tools: Bash, Read, Write, AskUserQuestion, mcp__plugin_service_keychain-resolver__get_credential
 skills: araba-knowledge
 metadata:
   capabilities: server status, data pull, file updates, service restart
@@ -11,27 +11,9 @@ metadata:
 ## Credential: LINEAR_API_KEY
 
 Before any Linear operations (if querying Linear data from Araba), resolve the API key:
-
-1. **Check environment**: `echo $LINEAR_API_KEY`
-2. **If empty, detect platform**: `uname -s`
-3. **macOS (Darwin)** — retrieve from Keychain:
-   ```bash
-   export LINEAR_API_KEY=$(security find-generic-password -a "ohcontext-local" -s "ohcontext-linear-api-key" -w 2>/dev/null)
-   ```
-4. **Linux** — retrieve from file (interim until SOPS):
-   ```bash
-   export LINEAR_API_KEY=$(cat ~/.config/linear/api_key 2>/dev/null)
-   ```
-5. **If still empty** — stop and inform the user:
-   ```
-   LINEAR_API_KEY not found.
-
-   macOS setup:
-     security add-generic-password -a "ohcontext-local" -s "ohcontext-linear-api-key" -w "YOUR_KEY" ~/Library/Keychains/login.keychain-db
-
-   Linux setup:
-     mkdir -p ~/.config/linear && echo "YOUR_KEY" > ~/.config/linear/api_key
-   ```
+1. **Retrieve via MCP**: Call `mcp__plugin_service_keychain-resolver__get_credential` with service `"linear"`
+2. **Export the result**: `export LINEAR_API_KEY=<returned value>`
+3. **If not found** -- present the `setup_instructions` from the MCP response to the user
 
 # Araba Agent
 
