@@ -278,6 +278,67 @@ Return this JSON structure for each classified issue:
 | goalAlignment | string | Which goal this advances |
 | notes | string | Additional context |
 
+---
+
+## 8. Autopilot Enrichment Checklist
+
+Reference for auditing tickets against autopilot eligibility requirements.
+
+### Label Gate
+
+Every autopilot-eligible ticket MUST have:
+
+| Label Type | Valid Values | Required |
+|-----------|-------------|----------|
+| Language | `typescript`, `python`, `swift` | Yes |
+| Project | `portfolio`, `crew`, `drift`, `viewport`, `design-system`, `oh-context` | Yes |
+| Automation | `autopilot-v1` | Yes (for opt-in) |
+
+### Description Gate
+
+Ticket description MUST contain acceptance criteria in one of these forms:
+- Heading: `## Acceptance Criteria` or `## AC`
+- Checkbox list: `- [ ] criteria item`
+- Numbered requirements: `1. requirement`
+
+Minimum: 2 acceptance criteria items.
+
+### Estimate Gate
+
+Ticket MUST have a Linear estimate set. Use the estimation matrix from Section 4 to propose values.
+
+### Language Inference Table
+
+When a ticket has a project label but no language label, infer language:
+
+| Project Label | Inferred Language |
+|--------------|-------------------|
+| `portfolio` | `typescript` |
+| `crew` | `typescript` |
+| `drift` | `swift` |
+| `viewport` | `swift` |
+| `design-system` | `typescript` |
+| `oh-context` | `swift` |
+
+### Enrichment Output Schema
+
+```json
+{
+  "issueId": "WOR-240",
+  "identifier": "WOR-240",
+  "title": "Issue title",
+  "status": "ready | needs-enrichment",
+  "missing_labels": ["typescript"],
+  "missing_estimate": true,
+  "missing_acceptance_criteria": false,
+  "proposed_labels": ["typescript"],
+  "proposed_estimate": 4,
+  "notes": "Language inferred from project label 'portfolio'"
+}
+```
+
+---
+
 ### Batch Output
 
 When classifying multiple issues:
