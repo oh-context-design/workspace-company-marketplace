@@ -8,8 +8,8 @@
  *   npx @cocal/linear-cycles-mcp
  *   node dist/index.js
  *
- * Environment:
- *   LINEAR_API_KEY - Optional (can be configured via manage_auth tool)
+ * Auth:
+ *   Stored in OS keychain (can be configured via manage_auth tool)
  */
 
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -28,10 +28,7 @@ No Linear API key found. To configure:
 
 1. Get your API key from: https://linear.app/settings/api
 
-2. Add to ~/.claude/plugins/.env:
-   LINEAR_API_KEY=lin_api_...
-
-Or use: manage_auth({ action: "setup", apiKey: "lin_api_..." })
+2. Use: manage_auth({ action: "setup", apiKey: "lin_api_..." })
 
 The server is running and ready.
 ================================================================================

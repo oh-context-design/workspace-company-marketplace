@@ -4,7 +4,7 @@
  * First-Time User Experience (FTUE) tool for Linear API key management.
  * Provides status, setup, and remove operations.
  *
- * API key is stored in .env file in the plugin directory.
+ * API key is stored in OS keychain.
  */
 
 import { z } from "zod";
@@ -69,9 +69,7 @@ function handleStatus(): CallToolResult {
       content: [
         {
           type: "text",
-          text: `✓ Linear API key is configured
-
-Source: ${status.envPath}
+          text: `Linear API key is configured (source: ${status.source}).
 
 All Linear Cycles MCP tools are ready to use.`,
         },
@@ -83,7 +81,7 @@ All Linear Cycles MCP tools are ready to use.`,
     content: [
       {
         type: "text",
-        text: `✗ Linear API key is not configured
+        text: `Linear API key is not configured.
 
 To get started:
 
@@ -92,10 +90,7 @@ To get started:
 
 2. Create a new API key with appropriate permissions
 
-3. Run: manage_auth with action: "setup" and apiKey: "lin_api_..."
-
-Or create .env file at: ${status.envPath}
-With contents: LINEAR_API_KEY=lin_api_...`,
+3. Run: manage_auth with action: "setup" and apiKey: "lin_api_..."`,
       },
     ],
   };
@@ -145,15 +140,11 @@ Get your API key from: https://linear.app/settings/api`,
     saveApiKey(apiKey.trim());
     resetLinearClient(); // Invalidate cached client so it picks up new key
 
-    const status = getStatus();
-
     return {
       content: [
         {
           type: "text",
-          text: `✓ Linear API key configured successfully
-
-Saved to: ${status.envPath}
+          text: `Linear API key configured successfully (stored in OS keychain).
 
 All Linear Cycles MCP tools are now ready to use.
 
@@ -200,9 +191,7 @@ function handleRemove(): CallToolResult {
         content: [
           {
             type: "text",
-            text: `✓ API key removed successfully
-
-Deleted: ${status.envPath}
+            text: `API key removed from OS keychain.
 
 To reconfigure, run: manage_auth with action: "setup"`,
           },
@@ -213,7 +202,7 @@ To reconfigure, run: manage_auth with action: "setup"`,
         content: [
           {
             type: "text",
-            text: `No .env file found at: ${status.envPath}`,
+            text: `Failed to remove API key from keychain.`,
           },
         ],
       };
