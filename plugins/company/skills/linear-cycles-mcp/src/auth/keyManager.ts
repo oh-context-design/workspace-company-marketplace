@@ -1,17 +1,13 @@
 /**
  * Linear API Key Manager
  *
- * Priority: OS Keychain > ~/.claude/plugins/.env (backward compatibility)
- *
- * Reads from keychain first, falls back to .env.
- * Writes always go to keychain.
+ * Reads and writes credentials via OS Keychain only.
+ * macOS: Keychain Access  |  Linux: libsecret
  */
 
 import * as path from "path";
-import * as fs from "fs";
 import * as os from "os";
 import { execFileSync } from "child_process";
-import { config } from "dotenv";
 
 // ---------------------------------------------------------------------------
 // Keychain helpers (minimal, same pattern as calendar MCP's keychain.ts)
@@ -150,40 +146,20 @@ function keychainDelete(): boolean {
 }
 
 // ---------------------------------------------------------------------------
-// .env fallback (backward compatibility)
-// ---------------------------------------------------------------------------
-
-// Global plugins .env location - fallback for backward compatibility
-const GLOBAL_ENV_PATH = path.join(os.homedir(), ".claude", "plugins", ".env");
-
-// Load from global location so process.env.LINEAR_API_KEY is populated
-config({ path: GLOBAL_ENV_PATH, quiet: true });
-
-// ---------------------------------------------------------------------------
-// Public API (same signatures as before)
+// Public API
 // ---------------------------------------------------------------------------
 
 /**
- * Get the Linear API key.
- * Priority: keychain > process.env (loaded from .env)
+ * Get the Linear API key from OS keychain.
  */
 export function getApiKey(): string | null {
-  // Priority 1: OS Keychain
   try {
     const keychainKey = keychainLoad();
     if (keychainKey && keychainKey.startsWith("lin_api_")) {
-      // Keep process.env in sync so downstream code that reads it directly works
-      process.env.LINEAR_API_KEY = keychainKey;
       return keychainKey;
     }
   } catch {
-    // Keychain unavailable — fall through to .env
-  }
-
-  // Priority 2: .env / process.env fallback
-  const apiKey = process.env.LINEAR_API_KEY;
-  if (apiKey && apiKey.startsWith("lin_api_")) {
-    return apiKey;
+    // Keychain unavailable
   }
 
   return null;
@@ -201,42 +177,18 @@ export function isConfigured(): boolean {
  */
 export function getStatus(): {
   configured: boolean;
-  source: "keychain" | "env" | "none";
-  envPath: string;
-  envExists: boolean;
+  source: "keychain" | "none";
 } {
-  // Check keychain first
   try {
     const keychainKey = keychainLoad();
     if (keychainKey && keychainKey.startsWith("lin_api_")) {
-      return {
-        configured: true,
-        source: "keychain",
-        envPath: GLOBAL_ENV_PATH,
-        envExists: fs.existsSync(GLOBAL_ENV_PATH),
-      };
+      return { configured: true, source: "keychain" };
     }
   } catch {
     // Keychain unavailable
   }
 
-  // Check .env
-  const envKey = process.env.LINEAR_API_KEY;
-  if (envKey && envKey.startsWith("lin_api_")) {
-    return {
-      configured: true,
-      source: "env",
-      envPath: GLOBAL_ENV_PATH,
-      envExists: fs.existsSync(GLOBAL_ENV_PATH),
-    };
-  }
-
-  return {
-    configured: false,
-    source: "none",
-    envPath: GLOBAL_ENV_PATH,
-    envExists: fs.existsSync(GLOBAL_ENV_PATH),
-  };
+  return { configured: false, source: "none" };
 }
 
 /**
@@ -266,49 +218,19 @@ export function validateApiKey(apiKey: string): { valid: boolean; error?: string
 }
 
 /**
- * Save API key to OS keychain (primary) and update process.env.
+ * Save API key to OS keychain.
  */
 export function saveApiKey(apiKey: string): void {
-  // Store in keychain
   keychainStore(apiKey);
-
-  // Reload into process.env so the running process picks it up immediately
-  process.env.LINEAR_API_KEY = apiKey;
 }
 
 /**
- * Remove the Linear API key from keychain and .env
+ * Remove the Linear API key from keychain.
  */
 export function removeApiKey(): boolean {
-  let removed = false;
-
-  // Remove from keychain
   try {
-    if (keychainDelete()) {
-      removed = true;
-    }
+    return keychainDelete();
   } catch {
-    // Keychain unavailable — continue to .env cleanup
+    return false;
   }
-
-  // Also clean up .env for completeness
-  if (fs.existsSync(GLOBAL_ENV_PATH)) {
-    let content = fs.readFileSync(GLOBAL_ENV_PATH, "utf-8");
-
-    if (content.includes("LINEAR_API_KEY=")) {
-      // Remove the LINEAR_API_KEY line and its comment
-      content = content.replace(/\n?# Linear API.*\nLINEAR_API_KEY=.*/g, "");
-      content = content.replace(/LINEAR_API_KEY=.*/g, "");
-
-      fs.writeFileSync(GLOBAL_ENV_PATH, content, {
-        encoding: "utf-8",
-        mode: 0o600,
-      });
-      removed = true;
-    }
-  }
-
-  delete process.env.LINEAR_API_KEY;
-
-  return removed;
 }
