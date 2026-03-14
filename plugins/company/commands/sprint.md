@@ -35,8 +35,8 @@ For planning requests, the command orchestrates all phases:
 
 Issue both Task calls in the SAME message:
 
-1. Task → **focus linear** agent
-   - subagent_type: focus:focus-linear
+1. Task → **linear service** agent
+   - subagent_type: service:linear-service
    - prompt: "Get current cycle issues for Workspace team. Return: issue ID, title, description, status, labels, estimate."
 
 2. Task → **life calendar** agent
@@ -92,7 +92,7 @@ Present to user and ask:
 Audit current cycle tickets against autopilot requirements and propose enrichments.
 
 When invoked standalone via `/sprint enrich`, first fetch cycle data:
-- Task → **focus linear** agent: "Get current cycle issues for Workspace team. Return: issue ID, identifier, title, description, status, labels, estimate, priority."
+- Task → **linear service** agent: "Get current cycle issues for Workspace team. Return: issue ID, identifier, title, description, status, labels, estimate, priority."
 
 Then for ALL issues (from Phase 5 combined matrix or fresh fetch):
 
@@ -126,7 +126,7 @@ Then for ALL issues (from Phase 5 combined matrix or fresh fetch):
    3. Skip enrichment
 
 9. If user approves (option 1 or 2 with individual confirmations):
-   - Task → **focus linear** agent: Apply approved label additions, estimate updates, and description amendments via Linear MCP.
+   - Task → **linear service** agent: Apply approved label additions, estimate updates, and description amendments via Linear MCP.
    - Report: "{N} tickets enriched, {M} now autopilot-ready."
 
 **Phase 6: Calendar Scheduling (only if user requests)**

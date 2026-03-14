@@ -52,7 +52,8 @@ COMMAND_FIELDS = frozenset([
     'name', 'description', 'allowed-tools', 'argument-hint', 'skills', 'metadata'
 ])
 SKILL_FIELDS = frozenset([
-    'name', 'description', 'allowed-tools', 'context', 'agent', 'user-invocable', 'metadata'
+    'name', 'description', 'allowed-tools', 'context', 'agent', 'user-invocable',
+    'disable-model-invocation', 'argument-hint', 'skills', 'metadata'
 ])
 
 # Fields that belong in metadata block
@@ -60,8 +61,8 @@ METADATA_FIELDS = frozenset(['capabilities', 'license'])
 
 # MCP wrapper agents - only these should have direct MCP tool access
 MCP_WRAPPER_AGENTS = frozenset([
-    'focus-linear', 'life-notion', 'life-calendar', 'life-kroger',
-    'life-instacart', 'company-sprint'  # Exception per delegation-map.json
+    'linear-service', 'life-notion', 'life-calendar',
+    'company-sprint'  # Exception per delegation-map.json
 ])
 
 # File type patterns
@@ -214,10 +215,9 @@ def check_mcp_tools(tools_str: str, agent_name: str) -> Optional[str]:
 
     # Look for MCP tool patterns
     mcp_patterns = [
-        (r'mcp__.*linear', 'Linear MCP - delegate to focus-linear agent'),
+        (r'mcp__(?!claude_ai_Linear).*linear', 'Linear MCP - delegate to linear-service agent'),
         (r'mcp__.*[Nn]otion', 'Notion MCP - delegate to life-notion agent'),
         (r'mcp__.*calendar', 'Calendar MCP - delegate to life-calendar agent'),
-        (r'mcp__.*kroger', 'Kroger MCP - delegate to life-kroger agent'),
     ]
 
     for pattern, message in mcp_patterns:

@@ -192,6 +192,35 @@ class TestValidateSkill:
         )
         assert any("short" in w.message.lower() for w in warnings)
 
+    def test_skill_argument_hint_accepted(self):
+        fm = {"name": "test-skill",
+              "description": "A test skill with argument hint",
+              "argument-hint": "<subcommand> [args]",
+              "user-invocable": True}
+        _, warnings = vf.validate_skill(
+            fm, "plugins/p/skills/test-skill/SKILL.md", ""
+        )
+        assert not any("argument-hint" in (w.field or "") for w in warnings)
+
+    def test_skill_disable_model_invocation_accepted(self):
+        fm = {"name": "test-skill",
+              "description": "A test skill with disable-model-invocation",
+              "disable-model-invocation": True,
+              "user-invocable": False}
+        _, warnings = vf.validate_skill(
+            fm, "plugins/p/skills/test-skill/SKILL.md", ""
+        )
+        assert not any("disable-model-invocation" in (w.field or "") for w in warnings)
+
+    def test_skill_skills_field_accepted(self):
+        fm = {"name": "test-skill",
+              "description": "A test skill with skills field",
+              "skills": "other-skill-a, other-skill-b"}
+        _, warnings = vf.validate_skill(
+            fm, "plugins/p/skills/test-skill/SKILL.md", ""
+        )
+        assert not any("skills" in (w.field or "") for w in warnings)
+
 
 # ── check_table_routing ──
 
@@ -229,7 +258,7 @@ class TestCheckAbsolutePaths:
 class TestCheckMcpTools:
 
     def test_wrapper_agent_allowed(self):
-        result = vf.check_mcp_tools("mcp__linear__get_issues", "focus-linear")
+        result = vf.check_mcp_tools("mcp__linear__get_issues", "linear-service")
         assert result is None
 
     def test_non_wrapper_blocked(self):

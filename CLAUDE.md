@@ -12,7 +12,7 @@ Executive suite plugin for Claude Code.
 | /company:addy | Engineering Lead - delivery, quality, team coordination |
 | /company:alara | Product Engineer - design leadership, product strategy |
 | /company:sprint | Sprint planning with Addy + Alara classification |
-| /company:araba | Personal AI assistant server operations |
+| /company:araba | Command router - 14 subcommands dispatching to specialist skills |
 
 ## 2. Cross-Marketplace Dependencies
 
@@ -20,7 +20,7 @@ Executive suite plugin for Claude Code.
 |-----------|-------------|---------|
 | swift, python, typescript agents | workspace-development | Addy (engineering routing) |
 | design agents (UX/UI/Motion/System) | workspace-design | Alara (design review routing) |
-| focus-linear agent | workspace-life | Sprint (current cycle data) |
+| linear-service agent | workspace-service | Sprint (current cycle data) |
 | life-calendar agent | workspace-life | Sprint + Alara (scheduling) |
 
 ## 3. Team Structure
@@ -29,6 +29,4 @@ Single source of truth: plugins/company/skills/strategic-framework/team-members.
 
 ## 4. MCP Server
 
-Linear Cycles MCP: plugins/company/skills/linear-cycles-mcp/dist/index.js
-Build: cd plugins/company/skills/linear-cycles-mcp && bun run build
-Auth: reads LINEAR_API_KEY from keychain (ohcontext-linear-api-key)
+~~Linear Cycles MCP~~ — Removed in v3.1.0. Linear cycle management migrated to `linear-service` agent in workspace-service-marketplace (uses Linear REST API via curl + keychain auth). The `plugins/company/skills/linear-cycles-mcp/` directory remains but is no longer registered as an MCP server.

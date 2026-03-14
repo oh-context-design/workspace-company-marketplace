@@ -1,6 +1,8 @@
 ---
 name: araba-knowledge
 description: Reference knowledge about Araba's server, files, and architecture. Use when answering questions about Araba.
+user-invocable: false
+disable-model-invocation: true
 metadata:
   capabilities: server details, file locations, personality traits, integration info
 ---
