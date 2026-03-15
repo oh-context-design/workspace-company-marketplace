@@ -12,7 +12,7 @@ Executive suite plugin for Claude Code.
 | /company:addy | Engineering Lead - delivery, quality, team coordination |
 | /company:alara | Product Engineer - design leadership, product strategy |
 | /company:sprint | Sprint planning with Addy + Alara classification |
-| /company:araba | Command router - 14 subcommands dispatching to specialist skills |
+| @Araba (agent) | Personal assistant - 14 commands, server management, routing to specialists |
 
 ## 2. Cross-Marketplace Dependencies
 

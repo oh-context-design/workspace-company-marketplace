@@ -3,8 +3,10 @@ name: araba-knowledge
 description: Reference knowledge about Araba's server, files, and architecture. Use when answering questions about Araba.
 user-invocable: false
 disable-model-invocation: true
+context:
+  - references/COMMANDS.md
 metadata:
-  capabilities: server details, file locations, personality traits, integration info
+  capabilities: server details, file locations, personality traits, integration info, command reference
 ---
 
 # Araba Knowledge Base
