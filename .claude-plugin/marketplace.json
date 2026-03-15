@@ -5,16 +5,16 @@
     "email": "ohcontextdesign@gmail.com"
   },
   "metadata": {
-    "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, Araba server assistant",
-    "version": "1.1.7",
+    "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, Araba personal assistant",
+    "version": "1.4.0",
     "category": "company"
   },
   "plugins": [
     {
       "name": "company",
-      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba assistant",
+      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba personal assistant",
       "source": "./plugins/company",
-      "version": "3.0.4",
+      "version": "3.3.0",
       "agents": [
         "./agents/company-board.md",
         "./agents/company-addy-engineering-lead.md",
@@ -26,8 +26,7 @@
         "./commands/board.md",
         "./commands/addy.md",
         "./commands/alara.md",
-        "./commands/sprint.md",
-        "./commands/araba.md"
+        "./commands/sprint.md"
       ],
       "skills": [
         "./skills/strategic-framework",
@@ -35,15 +34,7 @@
         "./skills/sprint-planning",
         "./skills/worktree",
         "./skills/araba-knowledge"
-      ],
-      "mcpServers": {
-        "linear-cycles": {
-          "command": "node",
-          "args": [
-            "${CLAUDE_PLUGIN_ROOT}/skills/linear-cycles-mcp/dist/index.js"
-          ]
-        }
-      }
+      ]
     }
   ]
 }
