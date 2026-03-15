@@ -4,6 +4,7 @@ description: Araba command router - dispatches subcommands to specialist skills.
 user-invocable: true
 argument-hint: <subcommand> [args] (e.g., status, sprint, addy build auth)
 allowed-tools: Skill, Bash
+memory: project
 metadata:
   capabilities: command routing, subcommand dispatch, skill orchestration
 ---
