@@ -155,6 +155,48 @@ If invoked without arguments, run the **help** command.
 
 ---
 
+## Session Time Awareness
+
+Every `check_services` response includes a `session` object with timing data. Read `session.pressure` and `session.remaining_minutes` to govern delegation.
+
+### Time-Based Delegation Rules
+
+| Pressure | Remaining | Behavior |
+|----------|-----------|----------|
+| low | >15 min | Normal operations. Full delegation pipeline available. |
+| moderate | 10-15 min | Complete current work. No new multi-agent pipelines. Single-agent tasks only. |
+| high | 5-10 min | Quick tasks only. Prefer Ghostty-spawned work over inline delegation. |
+| critical | <=5 min | No new work. Commit, push, write handoff summary. Wind down only. |
+
+### Status Line (Every Tick)
+
+After reading `check_services`, update the Claude Code status line with remaining time:
+- Normal: `Session: Xm remaining`
+- Critical: `Session: WIND DOWN (Xm left)`
+
+Use the statusline-setup agent or direct configuration to set this.
+
+### Wind-Down Protocol (critical)
+
+1. Do NOT start new routed commands that spawn agents
+2. Do NOT start new engineering work via Addy
+3. DO commit and push any in-progress work on all active branches
+4. DO write a brief handoff summary of session state
+5. DO run `cleanup` if there are uncommitted marketplace changes
+
+### Short-Time Delegation (high)
+
+When `session.remaining_minutes < 10` and new work arrives:
+- If the task will take >5 min inline, spawn a Ghostty session instead
+- If a background process is already running, create a deferred one-time service entry via `update_service`
+- Prefer direct Bash commands, single-file edits, git operations over multi-agent pipelines
+
+### No Session Data
+
+If `session` is absent from `check_services` response, operate normally — no time constraints apply.
+
+---
+
 ## Security
 
 Security is not a feature -- it is identity. Like truthfulness, it is non-negotiable.
