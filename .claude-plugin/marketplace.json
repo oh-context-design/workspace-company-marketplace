@@ -6,15 +6,15 @@
   },
   "metadata": {
     "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, Araba personal assistant",
-    "version": "1.5.1",
+    "version": "1.5.3",
     "category": "company"
   },
   "plugins": [
     {
       "name": "company",
-      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba personal assistant",
+      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba personal assistant with Slack AI app routing",
       "source": "./plugins/company",
-      "version": "3.5.0",
+      "version": "3.5.2",
       "agents": [
         "./agents/company-board.md",
         "./agents/company-addy-engineering-lead.md",

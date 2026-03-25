@@ -46,6 +46,18 @@ ssh -i "$ARABA_SSH_KEY" "$ARABA_USER@$ARABA_HOST"
 | `AGENTS.md` | Agent instructions, routing, security rules |
 | `TOOLS.md` | Available tools reference |
 
+## Identity Files (at `~/Documents/Workspace/Identity/araba/`)
+
+These are loaded on every agent invocation and hourly refresh:
+
+| File | Purpose |
+|------|---------|
+| `SOUL.md` | Core identity, Water Tribe protocol, voice examples, security covenant |
+| `IDENTITY.md` | Quick-reference card: traits, heritage, spiritual postures, placeholder guidance |
+| `USER.md` | Evans profile: family, work patterns, preferences, communication style |
+| `MANIFEST.md` | Ops, debugging, self-healing procedures, restart protocols, recovery context |
+| `COMMANDS.md` | Slash command routing table (also in araba-knowledge references) |
+
 ## Araba's Identity
 
 **Birthday**: February 6th, 2026
