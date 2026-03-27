@@ -1,33 +1,42 @@
 ---
 name: sprint-master
-description: Issue classification reference - complexity, parallelizability, team routing, estimation. Use when classifying sprint issues.
+description: Sprint issue classification reference -- complexity tiers, parallelizability categories, team routing, estimation matrix, autopilot enrichment, and priority scoring. Use this skill whenever classifying Linear tickets for sprints, estimating work, deciding autopilot eligibility, or routing issues to agents. Also use when someone asks about issue complexity, sprint capacity, or work categorization.
 metadata:
   capabilities: sprint-leadership, team-coordination, sprint-execution
 ---
 
 ## Actions
 
-**Goal**: Single sentence description of what this skill provides or enables.
+**Goal**: Classify sprint issues by complexity, parallelizability, and priority, then produce structured JSON output for sprint planning.
 
 **Inputs**:
-- Description of what the user or calling agent provides
+- Linear issues (backlog or cycle tickets) for classification
+- Optional: Notion goals for alignment scoring
+- Optional: Team availability for capacity checks
 
 **Steps**:
-1. First atomic step
-2. Second atomic step
-3. Third atomic step (if applicable)
+1. Assess each issue's complexity tier (low/medium/high) using Section 1 definitions
+2. Determine parallelizability category (ai-parallel/human-ai/human-required) using Section 2
+3. Apply estimation matrix from Section 4 to produce hour estimates
+4. Score priority using the combined formula from Section 6
+5. Check autopilot eligibility using Section 8 enrichment checklist
+6. Return structured JSON per Section 7 output schema
 
 **Checks**:
-- Verification that output is correct
-- Any assertions or validations
+- Every issue has complexity, parallelizability, and estimate populated
+- No weekend work blocks weekday critical path (Section 5)
+- Autopilot-tagged tickets have required labels, acceptance criteria, and estimates
+- Priority scores calculated consistently across batch
 
 **Stop Conditions**:
-- When to stop and ask the user for clarification
-- When to request additional information
+- Issue requirements are ambiguous -- flag as human-required and note the ambiguity
+- Missing project context needed for language inference
+- Conflicting dependencies that need human resolution
 
 **Recovery**:
-- How to handle errors gracefully
-- Fallback strategies if primary approach fails
+- If Linear data is incomplete, classify what is available and list gaps
+- If priority scoring inputs are missing, use complexity + parallelizability as fallback ranking
+- Default to human-ai when parallelizability is unclear
 
 ---
 
@@ -117,6 +126,8 @@ Tasks requiring significant human judgment and oversight.
 ## 3. Team Agent Catalog
 
 Reference: `team-members.json` for complete structure.
+
+> **Note:** Agent routing (general-purpose vs language-specific engineers) is determined at execution time by Araba based on current operational state. Refer to `workspace:development-pipeline` for the pipeline order.
 
 ### Engineering Teams (Reports to Addy)
 
@@ -255,7 +266,7 @@ Return this JSON structure for each classified issue:
   "complexity": "low|medium|high",
   "parallelizable": "ai-parallel|human-ai|human-required",
   "estimateHours": 6,
-  "suggestedAgent": "typescript-engineer",
+  "suggestedAgent": "typescript engineer",
   "weekendOk": false,
   "dependencies": ["WOR-120", "WOR-121"],
   "goalAlignment": "Q1 Goal: Ship auth feature",
@@ -272,7 +283,7 @@ Return this JSON structure for each classified issue:
 | complexity | enum | low, medium, high |
 | parallelizable | enum | ai-parallel, human-ai, human-required |
 | estimateHours | number | Estimated hours to complete |
-| suggestedAgent | string | Primary agent to assign |
+| suggestedAgent | string | Language + role (e.g., "typescript engineer"); agent type resolved at runtime by Araba |
 | weekendOk | boolean | Can be stretch goal |
 | dependencies | string[] | Blocking issue IDs |
 | goalAlignment | string | Which goal this advances |
@@ -291,8 +302,8 @@ Every autopilot-eligible ticket MUST have:
 | Label Type | Valid Values | Required |
 |-----------|-------------|----------|
 | Language | `typescript`, `python`, `swift` | Yes |
-| Project | `portfolio`, `crew`, `drift`, `viewport`, `design-system`, `oh-context` | Yes |
-| Automation | `autopilot-v1` | Yes (for opt-in) |
+| Project | `portfolio`, `drift`, `viewport`, `design-system`, `oh-context`, `viewport-interactions` | Yes |
+| Automation | `autopilot` | Yes (for opt-in) |
 
 ### Description Gate
 
@@ -314,11 +325,11 @@ When a ticket has a project label but no language label, infer language:
 | Project Label | Inferred Language |
 |--------------|-------------------|
 | `portfolio` | `typescript` |
-| `crew` | `typescript` |
 | `drift` | `swift` |
 | `viewport` | `swift` |
 | `design-system` | `typescript` |
 | `oh-context` | `swift` |
+| `viewport-interactions` | `swift` |
 
 ### Enrichment Output Schema
 
@@ -336,6 +347,28 @@ When a ticket has a project label but no language label, infer language:
   "notes": "Language inferred from project label 'portfolio'"
 }
 ```
+
+---
+
+## 9. Development Pipeline Integration
+
+All ticket execution follows the `workspace:development-pipeline` skill as the canonical pipeline order. This applies to both manual and autopilot ticket execution.
+
+### Pipeline Order
+
+1. **Codex reviewer** -- reviews ticket context, Slack threads, and supporting information
+2. **Language architect** -- reviews Codex output, designs implementation approach
+3. **Engineer** -- implements using TDD (red/green cycle)
+4. **Code reviewer** -- reviews implementation for quality, patterns, and standards
+5. **Security reviewer** -- reviews for vulnerabilities, secret exposure, and access control
+6. **PR creation** -- branch, commit, push, and open PR with full context
+
+### Key Rules
+
+- Agent type (general-purpose vs language-specific) resolved at runtime by Araba
+- Load `workspace:development-pipeline` skill for pipeline order
+- Each pipeline step produces artifacts consumed by the next step
+- If any step fails, fix and re-run that step before proceeding
 
 ---
 
