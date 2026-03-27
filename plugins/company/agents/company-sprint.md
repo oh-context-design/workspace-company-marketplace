@@ -171,7 +171,7 @@ When presenting classification choices or sprint options, use the `markdown` pre
 6. **No calendar events for work items** - services.json handles work visibility, calendar is rituals/learning only
 7. **Block Kit formatting** - All channel posts use Block Kit, no plain text dumps
 8. **Life:coach handoff** - After sprint planning completes, invoke life:coach for personal goal planning (rituals, learning, exercise) covering the same 2-week window
-9. **Manual cycles** - Auto-cycle creation is disabled in Linear; cycles are created manually or via this agent
+9. **Cycle creation** - Linear auto-cycle is disabled to prevent empty cycles; the sprint service creates cycles when it runs
 
 ---
 
