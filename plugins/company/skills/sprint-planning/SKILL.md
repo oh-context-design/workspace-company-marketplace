@@ -1,33 +1,42 @@
 ---
 name: sprint-planning
-description: Sprint operations reference - velocity tracking, standups, retrospectives, goal alignment, calendar sync. Use for sprint ceremonies.
+description: Sprint operations reference -- biweekly planning ceremonies, velocity tracking, standups, retrospectives, goal alignment, cycle health metrics, and sprint service automation. Use this skill for sprint planning sessions, sprint ceremonies, velocity reports, retrospectives, cycle health checks, or any sprint operational workflow. Also use when checking sprint status, preparing standups, or running the biweekly sprint planning service.
 metadata:
   capabilities: sprint-organization, backlog-management, capacity-planning
 ---
 
 ## Actions
 
-**Goal**: Single sentence description of what this skill provides or enables.
+**Goal**: Provide operational reference for all sprint ceremonies and the biweekly automated sprint planning service.
 
 **Inputs**:
-- Description of what the user or calling agent provides
+- Sprint context: active cycle data from Linear, backlog tickets, velocity history
+- Goal context: quarterly objectives from Notion (via life-notion agent)
+- Calendar context: ritual and learning schedule (work items stay in services.json)
 
 **Steps**:
-1. First atomic step
-2. Second atomic step
-3. Third atomic step (if applicable)
+1. Check Linear for active cycle -- skip if active with > 3 days remaining
+2. Pull backlog tickets for in-scope projects from Linear
+3. Classify tickets using sprint-master skill (complexity, parallelizability, estimation)
+4. Tag autopilot-eligible tickets with `autopilot` label
+5. Post sprint plan to #sprint channel with Block Kit formatting
+6. After sprint plan posts, invoke life:coach for personal goal planning (rituals, learning, exercise)
 
 **Checks**:
-- Verification that output is correct
-- Any assertions or validations
+- Active cycle detection prevents duplicate planning mid-sprint
+- Velocity trend calculated from last 4 cycles
+- Goal alignment validated -- flag sprints with no goal-advancing work
+- All channel posts use Block Kit formatting, no plain text
 
 **Stop Conditions**:
-- When to stop and ask the user for clarification
-- When to request additional information
+- Active sprint has > 3 days remaining -- skip and report
+- Linear API unavailable -- report error, do not guess at backlog
+- No backlog tickets for in-scope projects -- report empty backlog
 
 **Recovery**:
-- How to handle errors gracefully
-- Fallback strategies if primary approach fails
+- If velocity data has fewer than 4 cycles, use available data and note limited history
+- If Notion goals unavailable, proceed without goal alignment scoring
+- If life:coach invocation fails, complete sprint planning and flag personal planning as skipped
 
 ---
 
@@ -80,7 +89,7 @@ Delegate goal operations to **life notion** agent:
 ## Goal Sync Request
 
 Pull quarterly goals from Notion:
-- Current Q1 2026 objectives
+- Current quarter objectives (detect from date)
 - Progress metrics
 - Related sprint issues
 
@@ -353,82 +362,40 @@ Reference: life plugin `sprint-awareness` skill
 
 ---
 
-## 8. Calendar Event Format
+## 8. Calendar Scope
 
-When creating calendar events for sprint work:
+Calendar events for sprint work are NOT created. Work visibility comes from:
+- **services.json** -- execution queue and scheduling
+- **Triage reports** -- daily ticket status in #triage
+- **Channel reporting** -- sprint plan in #sprint, task updates in #autopilot
 
-```json
-{
-  "summary": "[PROJECT] Issue title",
-  "description": "Linear: [URL]\nClassified by: Addy + Alara",
-  "colorId": "[based on work type]",
-  "extendedProperties": {
-    "private": {
-      "syncSource": "sprint-planner",
-      "linearIssueId": "[uuid]",
-      "workType": "[ai-parallel|human-focus|deep-work]"
-    }
-  }
-}
-```
+Calendar stays reserved for rituals and learning items only. After sprint planning completes, life:coach handles personal goal scheduling (rituals, learning, exercise) which may create calendar events for those categories.
 
-### Calendar Scope Note
-
-Calendar events for sprint work are NOT created. services.json + triage + channel reporting provide work visibility. Calendar stays reserved for rituals and learning.
-
-### Color Mapping
-
-| Work Type | Color ID | Meaning |
-|-----------|----------|---------|
-| deep-work | 11 (red) | Critical, focus time |
-| human-focus | 5 (yellow) | Standard work |
-| ai-parallel | 2 (green) | Can delegate |
-| blocked | 8 (gray) | Waiting |
-
-### Calendar Delegation
-
-Delegate to **life calendar** agent for:
-- Creating sprint work blocks
-- Checking availability
-- Updating event status
+Delegate to **life calendar** agent only for ritual/learning scheduling, never for work items.
 
 ---
 
-## 9. Agent Labels System
+## 9. Sprint Label Requirements
 
-### Language Detection Labels
+Sprint tickets use the approved label set from the workspace. Refer to sprint-master skill Section 8 for full autopilot enrichment and label gate requirements.
 
-| Pattern | Language | Labels |
-|---------|----------|--------|
-| `*.swift`, `/ios/` | Swift | Swift Architect/Engineer/Code Reviewer/Security Reviewer |
-| `*.ts`, `*.tsx` | TypeScript | TypeScript Architect/Engineer/Code Reviewer/Security Reviewer |
-| `*.py`, `/scripts/` | Python | Python Architect/Engineer/Code Reviewer/Security Reviewer |
+### Approved Labels (Sprint-Relevant)
 
-### Design Review Labels
-
-| Agent | When to Apply |
-|-------|---------------|
-| UX Reviewer | User flows, navigation changes |
-| UI Web Reviewer | Web components, accessibility |
-| UI iOS Reviewer | SwiftUI views, iOS HIG |
-| Motion Reviewer | Animations, transitions |
-| System Reviewer | Design tokens, consistency |
+| Category | Labels |
+|----------|--------|
+| Language | `typescript`, `swift`, `python` |
+| Project | `portfolio`, `drift`, `viewport`, `design-system`, `oh-context`, `viewport-interactions` |
+| Automation | `autopilot` |
+| Type | `bug`, `poc` |
 
 ### Escalation Labels
 
-| Label | Meaning | Trigger |
-|-------|---------|---------|
-| Addy | Engineering review needed | Technical complexity high |
-| Alara | Product review needed | Scope unclear, design decision |
-| Needs Human | Human judgment required | Ambiguous requirements |
-| Blocked | Cannot proceed | External dependency |
+| Label | Trigger |
+|-------|---------|
+| Blocked | External dependency, cannot proceed |
+| Needs Human | Ambiguous requirements, human judgment required |
 
-### Label Application Rules
-
-1. **Primary label**: Language + role (e.g., "TypeScript Engineer")
-2. **Design labels**: Add if UI/UX affected
-3. **Escalation labels**: Add when conditions met
-4. **Remove labels**: When phase completes, remove old labels
+Do not create new labels without Evans's approval. Route language/agent questions to sprint-master skill Section 3 (Team Agent Catalog).
 
 ---
 
