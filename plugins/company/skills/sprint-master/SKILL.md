@@ -127,7 +127,7 @@ Tasks requiring significant human judgment and oversight.
 
 Reference: `team-members.json` for complete structure.
 
-> **Note:** For all engineering work, use general-purpose agents with engineering skills (`workspace:development-pipeline`), NOT language-specific engineer sub-agents directly. The sub-agents have login blockers.
+> **Note:** Agent routing (general-purpose vs language-specific engineers) is determined at execution time by Araba based on current operational state. Refer to `workspace:development-pipeline` for the pipeline order.
 
 ### Engineering Teams (Reports to Addy)
 
@@ -266,7 +266,7 @@ Return this JSON structure for each classified issue:
   "complexity": "low|medium|high",
   "parallelizable": "ai-parallel|human-ai|human-required",
   "estimateHours": 6,
-  "suggestedAgent": "general-purpose + typescript skills",
+  "suggestedAgent": "typescript engineer",
   "weekendOk": false,
   "dependencies": ["WOR-120", "WOR-121"],
   "goalAlignment": "Q1 Goal: Ship auth feature",
@@ -283,7 +283,7 @@ Return this JSON structure for each classified issue:
 | complexity | enum | low, medium, high |
 | parallelizable | enum | ai-parallel, human-ai, human-required |
 | estimateHours | number | Estimated hours to complete |
-| suggestedAgent | string | General-purpose agent + language skills (e.g., "general-purpose + swift skills") |
+| suggestedAgent | string | Language + role (e.g., "typescript engineer"); agent type resolved at runtime by Araba |
 | weekendOk | boolean | Can be stretch goal |
 | dependencies | string[] | Blocking issue IDs |
 | goalAlignment | string | Which goal this advances |
@@ -358,15 +358,15 @@ All ticket execution follows the `workspace:development-pipeline` skill as the c
 
 1. **Codex reviewer** -- reviews ticket context, Slack threads, and supporting information
 2. **Language architect** -- reviews Codex output, designs implementation approach
-3. **Engineer** (general-purpose agent + engineering skills) -- implements using TDD (red/green cycle)
+3. **Engineer** -- implements using TDD (red/green cycle)
 4. **Code reviewer** -- reviews implementation for quality, patterns, and standards
 5. **Security reviewer** -- reviews for vulnerabilities, secret exposure, and access control
 6. **PR creation** -- branch, commit, push, and open PR with full context
 
 ### Key Rules
 
-- Always use general-purpose agents loaded with `workspace:development-pipeline` skill
-- Never spawn language-specific sub-agents directly (login blockers in Ghostty)
+- Agent type (general-purpose vs language-specific) resolved at runtime by Araba
+- Load `workspace:development-pipeline` skill for pipeline order
 - Each pipeline step produces artifacts consumed by the next step
 - If any step fails, fix and re-run that step before proceeding
 

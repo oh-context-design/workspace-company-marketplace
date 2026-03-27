@@ -436,7 +436,7 @@ Before planning a new sprint, check Linear for an active cycle. If an active cyc
 
 ### Guardrails
 
-- Use general-purpose agents + engineering skills, NOT language-specific sub-agents
+- Agent type (general-purpose vs language-specific) resolved at runtime by Araba
 - Load `workspace:development-pipeline` skill for pipeline order
 - No calendar events for work items -- services.json handles visibility
 - Block Kit formatting in all channel posts
