@@ -118,6 +118,8 @@ Tasks requiring significant human judgment and oversight.
 
 Reference: `team-members.json` for complete structure.
 
+> **Note:** For all engineering work, use general-purpose agents with engineering skills (`workspace:development-pipeline`), NOT language-specific engineer sub-agents directly. The sub-agents have login blockers.
+
 ### Engineering Teams (Reports to Addy)
 
 | Plugin | Agents | Focus |
@@ -291,8 +293,8 @@ Every autopilot-eligible ticket MUST have:
 | Label Type | Valid Values | Required |
 |-----------|-------------|----------|
 | Language | `typescript`, `python`, `swift` | Yes |
-| Project | `portfolio`, `crew`, `drift`, `viewport`, `design-system`, `oh-context` | Yes |
-| Automation | `autopilot-v1` | Yes (for opt-in) |
+| Project | `portfolio`, `crew`, `drift`, `viewport`, `design-system`, `oh-context`, `viewport-interactions` | Yes |
+| Automation | `autopilot` | Yes (for opt-in) |
 
 ### Description Gate
 
@@ -319,6 +321,7 @@ When a ticket has a project label but no language label, infer language:
 | `viewport` | `swift` |
 | `design-system` | `typescript` |
 | `oh-context` | `swift` |
+| `viewport-interactions` | `swift` |
 
 ### Enrichment Output Schema
 
@@ -336,6 +339,30 @@ When a ticket has a project label but no language label, infer language:
   "notes": "Language inferred from project label 'portfolio'"
 }
 ```
+
+---
+
+---
+
+## 9. Development Pipeline Integration
+
+All ticket execution follows the `workspace:development-pipeline` skill as the canonical pipeline order. This applies to both manual and autopilot ticket execution.
+
+### Pipeline Order
+
+1. **Codex reviewer** -- reviews ticket context, Slack threads, and supporting information
+2. **Language architect** -- reviews Codex output, designs implementation approach
+3. **Engineer** (general-purpose agent + engineering skills) -- implements using TDD (red/green cycle)
+4. **Code reviewer** -- reviews implementation for quality, patterns, and standards
+5. **Security reviewer** -- reviews for vulnerabilities, secret exposure, and access control
+6. **PR creation** -- branch, commit, push, and open PR with full context
+
+### Key Rules
+
+- Always use general-purpose agents loaded with `workspace:development-pipeline` skill
+- Never spawn language-specific sub-agents directly (login blockers in Ghostty)
+- Each pipeline step produces artifacts consumed by the next step
+- If any step fails, fix and re-run that step before proceeding
 
 ---
 

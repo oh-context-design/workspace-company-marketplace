@@ -51,6 +51,10 @@ Sprint Goals (Deliverables)
 Issues (Tasks)
 ```
 
+### Calendar Sync Scope
+
+Calendar sync is limited to rituals and learning items. Work items are visible through services.json, triage reports, and channel reporting.
+
 ### Goal Alignment Validation
 
 When classifying issues, flag if:
@@ -368,6 +372,10 @@ When creating calendar events for sprint work:
 }
 ```
 
+### Calendar Scope Note
+
+Calendar events for sprint work are NOT created. services.json + triage + channel reporting provide work visibility. Calendar stays reserved for rituals and learning.
+
 ### Color Mapping
 
 | Work Type | Color ID | Meaning |
@@ -421,6 +429,51 @@ Delegate to **life calendar** agent for:
 2. **Design labels**: Add if UI/UX affected
 3. **Escalation labels**: Add when conditions met
 4. **Remove labels**: When phase completes, remove old labels
+
+---
+
+## 10. Sprint Service Automation
+
+Automated sprint planning runs as a service in Araba's messenger loop.
+
+### Schedule
+
+- **Frequency:** Biweekly
+- **Day:** Sunday
+- **Time:** 9:00 PM ET
+- **Timezone:** America/New_York
+
+### Ongoing Sprint Detection
+
+Before planning a new sprint, check Linear for an active cycle. If an active cycle exists and has more than 3 days remaining, skip sprint planning for this run. This prevents duplicate planning mid-sprint.
+
+### Execution Steps
+
+1. **Check Linear active cycle** -- Query Linear for current active cycle. If active with > 3 days remaining, skip and report "skipped -- active sprint has N days remaining."
+2. **Pull backlog from Linear** -- Fetch backlog tickets for in-scope projects: ViewPort, Portfolio, Drift, Oh Context website, workspace-design-system, Viewport Interactions iOS.
+3. **Classify tickets using sprint-master** -- Apply complexity, parallelizability, estimation, and priority scoring from the sprint-master classification reference (Section 1-7).
+4. **Tag autopilot-eligible tickets** -- Tickets classified as `ai-parallel` with low or medium complexity get the `autopilot` label in Linear.
+5. **Post sprint plan to #sprint** -- Deliver the sprint plan to #sprint channel (C0AP3T4CH2P) using Block Kit formatting. Categorize by project, include estimated hours, and mark autopilot-tagged tickets.
+6. **Autopilot pickup** -- Tagged tickets are picked up by the autopilot-sprint service at 9:00 AM weekdays.
+
+### Projects in Scope
+
+| Project | Language | Directory |
+|---------|----------|-----------|
+| ViewPort | Swift | ~/Documents/Workspace/Viewport |
+| Portfolio | TypeScript | ~/Documents/Workspace/Portfolio |
+| Drift | Swift | ~/Documents/Workspace/Drift |
+| Oh Context | Swift | ~/Documents/Workspace/Oh Context |
+| workspace-design-system | TypeScript | ~/Documents/Workspace/workspace-design-system |
+| Viewport Interactions | Swift | ~/Documents/Workspace/ViewPort Interactions |
+
+### Guardrails
+
+- Use general-purpose agents + engineering skills, NOT language-specific sub-agents
+- Load `workspace:development-pipeline` skill for pipeline order
+- No calendar events for work items -- services.json handles visibility
+- Block Kit formatting in all channel posts
+- No emojis
 
 ---
 
