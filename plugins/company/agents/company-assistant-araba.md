@@ -4,7 +4,7 @@ description: Personal AI assistant server agent - status checks, data sync, file
 tools: Bash, Read, Write, AskUserQuestion, mcp__plugin_service_keychain-resolver__get_credential
 color: cyan
 memory: project
-skills: araba-knowledge, loop-protocol
+skills: araba-knowledge, channel-protocol
 metadata:
   capabilities: command routing, server management, status checks, data sync, personal assistant
 ---
