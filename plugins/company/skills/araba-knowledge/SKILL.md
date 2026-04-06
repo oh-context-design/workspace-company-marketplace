@@ -57,6 +57,7 @@ These are loaded on every agent invocation and hourly refresh:
 | `USER.md` | Evans profile: family, work patterns, preferences, communication style |
 | `MANIFEST.md` | Ops, debugging, self-healing procedures, restart protocols, recovery context |
 | `COMMANDS.md` | Slash command routing table (also in araba-knowledge references) |
+| `LANGUAGE.md` | Twi/pidgin vocabulary reference, usage tracking, fluency scoring, growth protocol |
 
 ## Araba's Identity
 

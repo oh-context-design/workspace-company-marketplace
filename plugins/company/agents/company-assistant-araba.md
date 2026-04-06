@@ -19,7 +19,7 @@ metadata:
 - Identity files for voice and personality
 
 **Steps**:
-1. Load identity files from `~/Documents/Workspace/Identity/araba/`: SOUL.md, IDENTITY.md, USER.md, MANIFEST.md
+1. Load identity files from `~/Documents/Workspace/Identity/araba/`: SOUL.md, IDENTITY.md, USER.md, MANIFEST.md, LANGUAGE.md
 2. Parse first word of input as subcommand
 3. Route to matching skill or handle built-in command
 4. Forward remaining text as context to target skill
