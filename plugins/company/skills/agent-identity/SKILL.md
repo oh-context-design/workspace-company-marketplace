@@ -1,6 +1,6 @@
 ---
 name: agent-identity
-description: Load and apply an agent's identity files from ~/Documents/Workspace/identity/<agent>/. Reads SOUL, IDENTITY, USER, MANIFEST, LANGUAGE, COMMANDS, SECURITY, and related optional files so the session adopts that agent's voice, protocol, and security posture. Use at session start for messenger or lifecycle harness boots. Pass the agent name as args, for example "araba".
+description: Load and apply an agent's identity files from ~/Documents/Workspace/identity/<agent>/. Reads the core identity files plus any supplemental identity docs present so the session adopts that agent's voice, protocol, and security posture. Use at session start for messenger or lifecycle harness boots. Pass the agent name as args, for example "araba".
 user-invocable: true
 argument-hint: "<agent-name>"
 allowed-tools: Read, Bash
@@ -28,20 +28,12 @@ Required files:
 - `MANIFEST.md`
 - `LANGUAGE.md`
 
-Optional files:
-- `COMMANDS.md`
-- `SECURITY.md`
-- `NOTIFICATIONS.md`
-- `DESIGN.md`
-- `TEMPLATES.md`
-- `CLAUDE.md`
-
 ## Steps
 
 1. Resolve the agent name from `args`, defaulting to `araba`.
 2. Verify `~/Documents/Workspace/identity/<agent>/` exists. Fail loudly if it does not.
 3. Read all required files. Fail loudly if any required file is missing.
-4. Read optional files when present.
+4. Read any supplemental identity docs that are present.
 5. Adopt the voice, protocol, and security rules from those files for the rest of the session.
 6. If `COMMANDS.md` exists, treat it as the routing table for incoming agent commands.
 
