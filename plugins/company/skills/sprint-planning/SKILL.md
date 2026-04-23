@@ -401,7 +401,7 @@ Do not create new labels without Evans's approval. Route language/agent question
 
 ## 10. Sprint Service Automation
 
-Automated sprint planning runs as a service in Araba's messenger loop.
+Automated sprint planning runs as a service in Agent's messenger loop.
 
 ### Schedule
 
@@ -436,7 +436,7 @@ Before planning a new sprint, check Linear for an active cycle. If an active cyc
 
 ### Guardrails
 
-- Agent type (general-purpose vs language-specific) resolved at runtime by Araba
+- Agent type (general-purpose vs language-specific) resolved at runtime by Agent
 - Load `workspace:development-pipeline` skill for pipeline order
 - No calendar events for work items -- services.json handles visibility
 - Block Kit formatting in all channel posts

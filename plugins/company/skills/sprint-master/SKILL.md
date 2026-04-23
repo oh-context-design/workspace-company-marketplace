@@ -127,7 +127,7 @@ Tasks requiring significant human judgment and oversight.
 
 Reference: `team-members.json` for complete structure.
 
-> **Note:** Agent routing (general-purpose vs language-specific engineers) is determined at execution time by Araba based on current operational state. Refer to `workspace:development-pipeline` for the pipeline order.
+> **Note:** Agent routing (general-purpose vs language-specific engineers) is determined at execution time by Agent based on current operational state. Refer to `workspace:development-pipeline` for the pipeline order.
 
 ### Engineering Teams (Reports to Addy)
 
@@ -283,7 +283,7 @@ Return this JSON structure for each classified issue:
 | complexity | enum | low, medium, high |
 | parallelizable | enum | ai-parallel, human-ai, human-required |
 | estimateHours | number | Estimated hours to complete |
-| suggestedAgent | string | Language + role (e.g., "typescript engineer"); agent type resolved at runtime by Araba |
+| suggestedAgent | string | Language + role (e.g., "typescript engineer"); agent type resolved at runtime by Agent |
 | weekendOk | boolean | Can be stretch goal |
 | dependencies | string[] | Blocking issue IDs |
 | goalAlignment | string | Which goal this advances |
@@ -365,7 +365,7 @@ All ticket execution follows the `workspace:development-pipeline` skill as the c
 
 ### Key Rules
 
-- Agent type (general-purpose vs language-specific) resolved at runtime by Araba
+- Agent type (general-purpose vs language-specific) resolved at runtime by Agent
 - Load `workspace:development-pipeline` skill for pipeline order
 - Each pipeline step produces artifacts consumed by the next step
 - If any step fails, fix and re-run that step before proceeding

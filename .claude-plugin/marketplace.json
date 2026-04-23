@@ -5,22 +5,21 @@
     "email": "ohcontextdesign@gmail.com"
   },
   "metadata": {
-    "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, Araba personal assistant",
-    "version": "1.5.6",
+    "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, and agent identity loading",
+    "version": "1.6.0",
     "category": "company"
   },
   "plugins": [
     {
       "name": "company",
-      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Araba personal assistant with Slack AI app routing",
+      "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, and agent identity loading for messenger boots",
       "source": "./plugins/company",
-      "version": "3.5.5",
+      "version": "3.6.0",
       "agents": [
         "./agents/company-board.md",
         "./agents/company-addy-engineering-lead.md",
         "./agents/company-alara-product-engineer.md",
-        "./agents/company-sprint.md",
-        "./agents/company-assistant-araba.md"
+        "./agents/company-sprint.md"
       ],
       "commands": [
         "./commands/board.md",
@@ -29,11 +28,11 @@
         "./commands/sprint.md"
       ],
       "skills": [
+        "./skills/agent-identity",
         "./skills/strategic-framework",
         "./skills/sprint-master",
         "./skills/sprint-planning",
-        "./skills/worktree",
-        "./skills/araba-knowledge"
+        "./skills/worktree"
       ]
     }
   ]
