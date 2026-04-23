@@ -36,6 +36,8 @@ Coordination
 
 4. **`/company:sprint`** - Sprint planning orchestrator. Coordinates Addy + Alara for issue classification and calendar scheduling.
 
+5. **`/company:agent-identity <agent>`** - Load an agent identity from the files already present in the active session so messenger and lifecycle harnesses can boot the right voice, protocol, and security posture.
+
 ## Agents
 
 ### Board Agent (`company-board.md`)
@@ -61,6 +63,12 @@ Executive decision-making frameworks:
 - `references/decision-frameworks.md` - SWOT, OKRs, OODA Loop
 - `references/compounding-engineering.md` - AI-native engineering practices
 
+### agent-identity
+Generic identity loader for company agents:
+- Reads the required identity files already present in the active session
+- Applies the agent's voice, protocol, and security posture to the session
+- Lets messenger harnesses boot the active agent without a dedicated wrapper
+
 ## Usage Examples
 
 ```bash
@@ -77,6 +85,9 @@ Executive decision-making frameworks:
 /company:sprint Plan my sprint for next week
 /company:sprint status
 /company:sprint velocity
+
+# Load an agent identity into the current session
+/company:agent-identity araba
 ```
 
 ## Integration

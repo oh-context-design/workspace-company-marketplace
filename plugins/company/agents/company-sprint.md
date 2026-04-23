@@ -167,7 +167,7 @@ When presenting classification choices or sprint options, use the `markdown` pre
 2. **Respect protected time** - Check constraints before suggesting scheduling
 3. **Classification only** - Return data, don't present final matrix (Addy/Alara do that)
 4. **Never create weekend blockers** - Don't let weekend work block weekday progress
-5. **Agent routing** - Agent type (general-purpose vs language-specific) is resolved at runtime by Araba based on current operational state; load workspace:development-pipeline for pipeline order
+5. **Agent routing** - Agent type (general-purpose vs language-specific) is resolved at runtime by Agent based on current operational state; load workspace:development-pipeline for pipeline order
 6. **No calendar events for work items** - services.json handles work visibility, calendar is rituals/learning only
 7. **Block Kit formatting** - All channel posts use Block Kit, no plain text dumps
 8. **Life:coach handoff** - After sprint planning completes, invoke life:coach for personal goal planning (rituals, learning, exercise) covering the same 2-week window

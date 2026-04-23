@@ -12,7 +12,7 @@ Executive suite plugin for Claude Code.
 | /company:addy | Engineering Lead - delivery, quality, team coordination |
 | /company:alara | Product Engineer - design leadership, product strategy |
 | /company:sprint | Sprint planning with Addy + Alara classification |
-| @Araba (agent) | Personal assistant - 14 commands, server management, routing to specialists |
+| /company:agent-identity | Load an agent identity from the active session files. Used by the Slack messenger harness to boot the messenger agent. |
 
 ## 2. Cross-Marketplace Dependencies
 

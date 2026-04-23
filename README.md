@@ -1,12 +1,12 @@
 # workspace-company-marketplace
 
-Executive suite marketplace for Claude Code. Provides board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, and Araba command router.
+Executive suite marketplace for Claude Code. Provides board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, and generic agent identity loading.
 
 ## Plugin
 
 | Plugin | Commands | Description |
 |--------|----------|-------------|
-| company | `/company:board`, `/company:addy`, `/company:alara`, `/company:sprint`, `/company:araba` | Executive suite with strategic decision-making, sprint planning, and command routing |
+| company | `/company:board`, `/company:addy`, `/company:alara`, `/company:sprint`, `/company:agent-identity <agent>` | Executive suite with strategic decision-making, sprint planning, and identity loading for messenger boots |
 
 ## Requirements
 
