@@ -1,7 +1,7 @@
 ---
 name: agent-identity
 description: Load and apply an agent's identity files from the active session context. Reads the core identity files plus any supplemental identity docs present so the session adopts that agent's voice, protocol, and security posture. Use at session start for messenger or lifecycle harness boots. Pass the agent name as args, for example "araba".
-user-invocable: false
+user-invocable: true
 argument-hint: "<agent-name>"
 allowed-tools: Read, Bash
 metadata:
