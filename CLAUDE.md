@@ -12,7 +12,7 @@ Executive suite plugin for Claude Code.
 | /company:addy | Engineering Lead - delivery, quality, team coordination |
 | /company:alara | Product Engineer - design leadership, product strategy |
 | /company:sprint | Sprint planning with Addy + Alara classification |
-| /company:agent-identity | Load an agent identity from `~/Documents/Workspace/identity/<agent>/`. Used by the Slack messenger harness to boot the messenger agent. |
+| /company:agent-identity | Load an agent identity from the active session files. Used by the Slack messenger harness to boot the messenger agent. |
 
 ## 2. Cross-Marketplace Dependencies
 
@@ -33,4 +33,4 @@ Single source of truth: plugins/company/skills/strategic-framework/team-members.
 
 ## 5. Migration Notes
 
-**v4.x.x -- Legacy wrapper to skill migration.** The legacy wrapper agent and cloud-era knowledge skill were removed. The active agent voice and behavior now load through the generic `company:agent-identity` skill, which reads `~/Documents/Workspace/identity/araba/`. The autopilot Slack messenger boots via `/company:agent-identity araba`. Cloud-era references tied to the retired server setup were dropped.
+**v4.x.x -- Legacy wrapper to skill migration.** The legacy wrapper agent and cloud-era knowledge skill were removed. The active agent voice and behavior now load through the generic `company:agent-identity` skill from files already present in the session. The autopilot Slack messenger boots via `/company:agent-identity araba`. Cloud-era references tied to the retired server setup were dropped.

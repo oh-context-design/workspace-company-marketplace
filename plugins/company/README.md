@@ -36,7 +36,7 @@ Coordination
 
 4. **`/company:sprint`** - Sprint planning orchestrator. Coordinates Addy + Alara for issue classification and calendar scheduling.
 
-5. **`/company:agent-identity <agent>`** - Load an agent identity from `~/Documents/Workspace/identity/<agent>/` so messenger and lifecycle harnesses can boot the right voice, protocol, and security posture.
+5. **`/company:agent-identity <agent>`** - Load an agent identity from the files already present in the active session so messenger and lifecycle harnesses can boot the right voice, protocol, and security posture.
 
 ## Agents
 
@@ -65,7 +65,7 @@ Executive decision-making frameworks:
 
 ### agent-identity
 Generic identity loader for company agents:
-- Reads required files from `~/Documents/Workspace/identity/<agent>/`
+- Reads the required identity files already present in the active session
 - Applies the agent's voice, protocol, and security posture to the session
 - Lets messenger harnesses boot the active agent without a dedicated wrapper
 
