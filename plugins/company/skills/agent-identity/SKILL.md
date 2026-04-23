@@ -37,10 +37,6 @@ Required files:
 5. Adopt the voice, protocol, and security rules from those files for the rest of the session.
 6. If `COMMANDS.md` exists, treat it as the routing table for incoming agent commands.
 
-## Extension Guidance
-
-To onboard a new agent, create `~/Documents/Workspace/identity/<name>/` with the same file set. No skill changes are required.
-
 ## Non-Goals
 
 - Built-in command behavior
