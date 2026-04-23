@@ -30,7 +30,3 @@ Single source of truth: plugins/company/skills/strategic-framework/team-members.
 ## 4. MCP Server
 
 ~~Linear Cycles MCP~~ — Removed in v3.1.0. Linear cycle management migrated to `linear-service` agent in workspace-service-marketplace (uses Linear REST API via curl + keychain auth). The `plugins/company/skills/linear-cycles-mcp/` directory remains but is no longer registered as an MCP server.
-
-## 5. Migration Notes
-
-**v4.x.x -- Legacy wrapper to skill migration.** The legacy wrapper agent and cloud-era knowledge skill were removed. The active agent voice and behavior now load through the generic `company:agent-identity` skill from files already present in the session. The autopilot Slack messenger boots via `/company:agent-identity araba`. Cloud-era references tied to the retired server setup were dropped.
