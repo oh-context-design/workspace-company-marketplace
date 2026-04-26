@@ -13,6 +13,7 @@ Executive suite plugin for Claude Code.
 | /company:alara | Product Engineer - design leadership, product strategy |
 | /company:sprint | Sprint planning with Addy + Alara classification |
 | /company:agent-identity | Load an agent identity from the active session files. Used by the Slack messenger harness to boot the messenger agent. |
+| /company:crew-ftax | Guided agent identity creation. Generates SOUL.md, IDENTITY.md, USER.md, CLAUDE.md through Q&A. Moved from `/workspace:crew-ftax` (AGI-23). |
 
 ## 2. Cross-Marketplace Dependencies
 

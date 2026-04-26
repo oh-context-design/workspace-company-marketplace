@@ -6,7 +6,7 @@ Executive suite marketplace for Claude Code. Provides board orchestration, engin
 
 | Plugin | Commands | Description |
 |--------|----------|-------------|
-| company | `/company:board`, `/company:addy`, `/company:alara`, `/company:sprint`, `/company:agent-identity <agent>` | Executive suite with strategic decision-making, sprint planning, and identity loading for messenger boots |
+| company | `/company:board`, `/company:addy`, `/company:alara`, `/company:sprint`, `/company:crew-ftax`, `/company:agent-identity <agent>` | Executive suite with strategic decision-making, sprint planning, identity loading for messenger boots, and Crew FTAX identity creation |
 
 ## Requirements
 
