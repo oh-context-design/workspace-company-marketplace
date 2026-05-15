@@ -1,24 +1,24 @@
 ---
 name: sprint-planning
-description: Sprint operations reference -- biweekly planning ceremonies, velocity tracking, standups, retrospectives, goal alignment, cycle health metrics, and sprint service automation. Use this skill for sprint planning sessions, sprint ceremonies, velocity reports, retrospectives, cycle health checks, or any sprint operational workflow. Also use when checking sprint status, preparing standups, or running the biweekly sprint planning service.
+description: Sprint operations reference -- biweekly planning ceremonies, velocity tracking, standups, retrospectives, goal alignment, cycle health metrics, and scheduled sprint planning. Use this skill for sprint planning sessions, sprint ceremonies, velocity reports, retrospectives, cycle health checks, or any sprint operational workflow. Also use when checking sprint status, preparing standups, or running the biweekly sprint planning workflow.
 metadata:
   capabilities: sprint-organization, backlog-management, capacity-planning
 ---
 
 ## Actions
 
-**Goal**: Provide operational reference for all sprint ceremonies and the biweekly automated sprint planning service.
+**Goal**: Provide operational reference for all sprint ceremonies and the biweekly scheduled sprint planning workflow.
 
 **Inputs**:
 - Sprint context: active cycle data from Linear, backlog tickets, velocity history
 - Goal context: quarterly objectives from Notion (via life-notion agent)
-- Calendar context: ritual and learning schedule (work items stay in services.json)
+- Calendar context: ritual and learning schedule (work execution visibility stays with workspace-agent autosprint)
 
 **Steps**:
 1. Check Linear for active cycle -- skip if active with > 3 days remaining
 2. Pull backlog tickets for in-scope projects from Linear
 3. Classify tickets using sprint-master skill (complexity, parallelizability, estimation)
-4. Tag autopilot-eligible tickets with `autopilot` label
+4. Mark approved autosprint handoff candidates with the Linear `autopilot` label
 5. Post sprint plan to #sprint channel with Block Kit formatting
 6. After sprint plan posts, invoke life:coach for personal goal planning (rituals, learning, exercise)
 
@@ -62,7 +62,7 @@ Issues (Tasks)
 
 ### Calendar Sync Scope
 
-Calendar sync is limited to rituals and learning items. Work items are visible through services.json, triage reports, and channel reporting.
+Calendar sync is limited to rituals and learning items. Work execution visibility belongs to workspace-agent autosprint runtime, triage reports, and channel reporting.
 
 ### Goal Alignment Validation
 
@@ -364,8 +364,8 @@ Reference: life plugin `sprint-awareness` skill
 
 ## 8. Calendar Scope
 
-Calendar events for sprint work are NOT created. Work visibility comes from:
-- **services.json** -- execution queue and scheduling
+Calendar events for sprint work are NOT created. Work execution visibility comes from workspace-agent runtime surfaces and channel reporting:
+- **Autosprint runtime status** -- execution queue and scheduling owned by workspace-agent
 - **Triage reports** -- daily ticket status in #triage
 - **Channel reporting** -- sprint plan in #sprint, task updates in #autopilot
 
@@ -377,7 +377,7 @@ Delegate to **life calendar** agent only for ritual/learning scheduling, never f
 
 ## 9. Sprint Label Requirements
 
-Sprint tickets use the approved label set from the workspace. Refer to sprint-master skill Section 8 for full autopilot enrichment and label gate requirements.
+Sprint tickets use the approved label set from the workspace. Refer to sprint-master skill Section 8 for full autosprint handoff enrichment and label gate requirements.
 
 ### Approved Labels (Sprint-Relevant)
 
@@ -399,9 +399,9 @@ Do not create new labels without Evans's approval. Route language/agent question
 
 ---
 
-## 10. Sprint Service Automation
+## 10. Scheduled Sprint Planning Workflow
 
-Automated sprint planning runs as a service in Agent's messenger loop.
+Scheduled sprint planning may be triggered by the company sprint workflow or an external scheduler. This skill defines planning/classification behavior only; workspace-agent `autosprint` owns ticket execution, launch/runtime state, and PR pipeline behavior.
 
 ### Schedule
 
@@ -414,14 +414,14 @@ Automated sprint planning runs as a service in Agent's messenger loop.
 
 Before planning a new sprint, check Linear for an active cycle. If an active cycle exists and has more than 3 days remaining, skip sprint planning for this run. This prevents duplicate planning mid-sprint.
 
-### Execution Steps
+### Planning Steps
 
 1. **Check Linear active cycle** -- Query Linear for current active cycle. If active with > 3 days remaining, skip and report "skipped -- active sprint has N days remaining."
 2. **Pull backlog from Linear** -- Fetch backlog tickets for in-scope projects: ViewPort, Portfolio, Drift, Oh Context website, workspace-design-system, Viewport Interactions iOS.
 3. **Classify tickets using sprint-master** -- Apply complexity, parallelizability, estimation, and priority scoring from the sprint-master classification reference (Section 1-7).
-4. **Tag autopilot-eligible tickets** -- Tickets classified as `ai-parallel` with low or medium complexity get the `autopilot` label in Linear.
+4. **Mark autosprint handoff candidates** -- Tickets classified as `ai-parallel` with low or medium complexity may receive the Linear `autopilot` label after user approval.
 5. **Post sprint plan to #sprint** -- Deliver the sprint plan to #sprint channel (C0AP3T4CH2P) using Block Kit formatting. Categorize by project, include estimated hours, and mark autopilot-tagged tickets.
-6. **Autopilot pickup** -- Tagged tickets are picked up by the autopilot-sprint service at 9:00 AM weekdays.
+6. **Autosprint handoff** -- Tagged tickets become eligible for workspace-agent `autosprint`; workspace-agent owns pickup timing, launch/runtime, task inbox, and PR pipeline behavior.
 
 ### Projects in Scope
 
@@ -436,9 +436,8 @@ Before planning a new sprint, check Linear for an active cycle. If an active cyc
 
 ### Guardrails
 
-- Agent type (general-purpose vs language-specific) resolved at runtime by Agent
-- Load `workspace:development-pipeline` skill for pipeline order
-- No calendar events for work items -- services.json handles visibility
+- Agent type suggestions are planning metadata only; workspace-agent resolves runtime details during autosprint execution
+- No calendar events for work items -- workspace-agent owns execution visibility
 - Block Kit formatting in all channel posts
 - No emojis
 
