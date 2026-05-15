@@ -21,13 +21,15 @@ Executive suite plugin for Claude Code.
 |-----------|-------------|---------|
 | swift, python, typescript agents | workspace-development | Addy (engineering routing) |
 | design agents (UX/UI/Motion/System) | workspace-design | Alara (design review routing) |
-| linear-service agent | workspace-service | Sprint (current cycle data) |
 | life-calendar agent | workspace-life | Sprint + Alara (scheduling) |
+| agent runtime harness | workspace-agent | Slack messenger boot, autosprint execution, Ghostty task runtime, and task inbox IPC |
+
+## 2.1. Autopilot Naming Boundary
+
+In this marketplace, `autopilot` normally refers to historical/external planning concepts: the Linear label, the `#autopilot` Slack channel, and sprint ticket eligibility language. Keep those names unchanged.
+
+Use `autosprint` only when referring to the workspace-agent plugin/skill/script that executes sprint work. Messenger lifecycle belongs to `agent-messenger`, Ghostty task mechanics belong to `ghostty-tasks`, and task-side inbox tools belong to `task-ipc-mcp`.
 
 ## 3. Team Structure
 
 Single source of truth: plugins/company/skills/strategic-framework/team-members.json
-
-## 4. MCP Server
-
-~~Linear Cycles MCP~~ — Removed in v3.1.0. Linear cycle management migrated to `linear-service` agent in workspace-service-marketplace (uses Linear REST API via curl + keychain auth). The `plugins/company/skills/linear-cycles-mcp/` directory remains but is no longer registered as an MCP server.
