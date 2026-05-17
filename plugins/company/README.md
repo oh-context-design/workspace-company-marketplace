@@ -34,7 +34,7 @@ Coordination
 
 3. **`/company:alara`** - Product Engineer applying Jobs/Ive/Rams principles. Partners with Addy. Sponsored by CDO. "Should we build this?"
 
-4. **`/company:sprint`** - Sprint planning orchestrator. Coordinates Addy + Alara for issue classification and calendar scheduling.
+4. **`/company:sprint`** - Sprint planning orchestrator. Coordinates Addy + Alara for issue classification, calendar scheduling, and autosprint handoff preparation. Workspace-agent owns autosprint execution/runtime.
 
 5. **`/company:agent-identity <agent>`** - Load an agent identity from the files already present in the active session so messenger and lifecycle harnesses can boot the right voice, protocol, and security posture.
 
@@ -50,7 +50,7 @@ Engineering Lead and force multiplier. Blue color. Peer partnership with Alara. 
 Product Engineer with Jobs/Ive/Rams principles. Purple color. Peer partnership with Addy. CDO sponsor. Manages design reviewers. Strategic product decisions.
 
 ### Sprint Agent (`company-sprint.md`)
-Sprint planning orchestrator. Cyan color. Coordinates Addy + Alara for parallel issue classification, calendar scheduling via Google Calendar MCP, Linear integration.
+Sprint planning orchestrator. Cyan color. Coordinates Addy + Alara for parallel issue classification, calendar scheduling via Google Calendar MCP, Linear integration, and autosprint handoff inputs. It does not launch autosprint tasks or manage runtime state.
 
 ## Skills
 
@@ -95,7 +95,7 @@ Generic identity loader for company agents:
 - **Board** → Escalation point for Addy and Alara disagreements
 - **Addy** → Routes to Swift/Python/TypeScript specialists
 - **Alara** → Routes to design plugin reviewers
-- **Sprint** → Uses Linear MCP, Google Calendar MCP, Notion MCP
+- **Sprint** → Uses Linear MCP, Google Calendar MCP, Notion MCP, and produces handoff inputs for workspace-agent autosprint execution
 
 ## Version History
 

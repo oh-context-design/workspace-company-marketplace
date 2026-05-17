@@ -11,7 +11,7 @@ Executive suite plugin for Claude Code.
 | /company:board | Cross-functional strategic decisions (CDO leads) |
 | /company:addy | Engineering Lead - delivery, quality, team coordination |
 | /company:alara | Product Engineer - design leadership, product strategy |
-| /company:sprint | Sprint planning with Addy + Alara classification |
+| /company:sprint | Sprint planning, Addy + Alara classification, scheduling, and autosprint handoff preparation |
 | /company:agent-identity | Load an agent identity from the active session files. Used by the Slack messenger harness to boot the messenger agent. |
 | /company:crew-ftax | Guided agent identity creation. Generates SOUL.md, IDENTITY.md, USER.md, CLAUDE.md through Q&A. Moved from `/workspace:crew-ftax` (AGI-23). |
 
@@ -22,13 +22,13 @@ Executive suite plugin for Claude Code.
 | swift, python, typescript agents | workspace-development | Addy (engineering routing) |
 | design agents (UX/UI/Motion/System) | workspace-design | Alara (design review routing) |
 | life-calendar agent | workspace-life | Sprint + Alara (scheduling) |
-| agent runtime harness | workspace-agent | Slack messenger boot, autosprint execution, Ghostty task runtime, and task inbox IPC |
+| agent runtime harness | workspace-agent | Slack messenger boot, autosprint execution, Ghostty task runtime, and agent-inbox-mcp task inbox tools |
 
-## 2.1. Autopilot Naming Boundary
+## 2.1. Sprint Planning / Autosprint Boundary
 
-In this marketplace, `autopilot` normally refers to historical/external planning concepts: the Linear label, the `#autopilot` Slack channel, and sprint ticket eligibility language. Keep those names unchanged.
+Company owns sprint planning, classification, scheduling, and handoff inputs through `/company:sprint`. It may mark Linear tickets with the `autopilot` label when they are approved for autosprint handoff, but it does not launch tasks, manage runtime state, or own PR pipeline behavior.
 
-Use `autosprint` only when referring to the workspace-agent plugin/skill/script that executes sprint work. Messenger lifecycle belongs to `agent-messenger`, Ghostty task mechanics belong to `ghostty-tasks`, and task-side inbox tools belong to `task-ipc-mcp`.
+`autosprint` is the workspace-agent plugin/skill/script that executes sprint tickets. Messenger lifecycle belongs to `agent-messenger`, Ghostty task mechanics belong to `ghostty-tasks`, and task-side inbox tools belong to `agent-inbox-mcp`.
 
 ## 3. Team Structure
 

@@ -17,7 +17,7 @@ Detect intent from the user's request and route accordingly:
 
 - **Planning requests** ("plan", "sunday planning", "set up the week") run the full orchestration workflow below.
 
-- **Enrich requests** ("enrich", "enrich tickets", "prep for autopilot") → Jump directly to Phase 5.5 (Enrichment Audit) using current cycle data.
+- **Enrich requests** ("enrich", "enrich tickets", "prep autosprint handoff") → Jump directly to Phase 5.5 (Handoff Enrichment Audit) using current cycle data.
 
 - **Friday requests** ("friday", "friday focus", "dev session") → Task → **company sprint** agent for focused session setup.
 
@@ -87,9 +87,9 @@ Present to user and ask:
 2. Adjust any classifications?
 3. Done for now
 
-**Phase 5.5: Enrichment Audit (Autopilot Readiness)**
+**Phase 5.5: Handoff Enrichment Audit (Autosprint Readiness)**
 
-Audit current cycle tickets against autopilot requirements and propose enrichments.
+Audit current cycle tickets against autosprint handoff requirements and propose enrichments. This prepares tickets for the workspace-agent `autosprint` execution surface; it does not launch work or manage runtime state.
 
 When invoked standalone via `/sprint enrich`, first fetch cycle data:
 - Task → **linear service** agent: "Get current cycle issues for Workspace team. Return: issue ID, identifier, title, description, status, labels, estimate, priority."
@@ -98,7 +98,7 @@ Then for ALL issues (from Phase 5 combined matrix or fresh fetch):
 
 7. Task → **company sprint** agent (enrichment audit)
    - subagent_type: company:company-sprint
-   - prompt: "Audit these issues for autopilot readiness. For each issue, check:
+   - prompt: "Audit these issues for autosprint handoff readiness. For each issue, check:
      1. **Label gate**: Has language label (typescript/python/swift)? Has project label (portfolio/crew/drift/viewport/design-system/oh-context)?
      2. **Estimate gate**: Has an estimate set?
      3. **Description gate**: Has acceptance criteria (checkboxes, 'Acceptance Criteria' heading, or numbered requirements)?
@@ -109,12 +109,12 @@ Then for ALL issues (from Phase 5 combined matrix or fresh fetch):
         - viewport → swift
         - design-system → typescript
         - oh-context → swift
-     Return for each issue: identifier, title, missing_labels[], missing_estimate (boolean), missing_acceptance_criteria (boolean), proposed_labels[], proposed_estimate (number|null), status (ready|needs-enrichment)."
+     Return for each issue: identifier, title, missing_labels[], missing_estimate (boolean), missing_acceptance_criteria (boolean), proposed_labels[], proposed_estimate (number|null), handoff_status (ready|needs-enrichment)."
 
 8. Present enrichment audit as a table:
 
    ```
-   | Ticket | Status | Missing | Proposed Fix |
+   | Ticket | Handoff Status | Missing | Proposed Fix |
    |--------|--------|---------|-------------|
    | WOR-240 | needs-enrichment | language label, estimate | +typescript, estimate: 4h |
    | WOR-241 | ready | — | — |
@@ -127,7 +127,7 @@ Then for ALL issues (from Phase 5 combined matrix or fresh fetch):
 
 9. If user approves (option 1 or 2 with individual confirmations):
    - Task → **linear service** agent: Apply approved label additions, estimate updates, and description amendments via Linear MCP.
-   - Report: "{N} tickets enriched, {M} now autopilot-ready."
+   - Report: "{N} tickets enriched, {M} now autosprint-handoff-ready."
 
 **Phase 6: Calendar Scheduling (only if user requests)**
 
@@ -151,7 +151,7 @@ For non-plan operations, route directly to sprint agent:
 ## Natural Language Examples
 
 - "Plan my sprint" → Full orchestration workflow (Phases 1-6)
-- "Enrich tickets" / "Prep for autopilot" → Phase 5.5 enrichment audit
+- "Enrich tickets" / "Prep autosprint handoff" → Phase 5.5 handoff enrichment audit
 - "Set up Friday dev session" → Direct to sprint agent
 - "Weekly review" → Direct to sprint agent
 - "How's the sprint going?" → Direct to sprint agent

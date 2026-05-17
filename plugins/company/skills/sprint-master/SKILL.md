@@ -1,8 +1,8 @@
 ---
 name: sprint-master
-description: Sprint issue classification reference -- complexity tiers, parallelizability categories, team routing, estimation matrix, autopilot enrichment, and priority scoring. Use this skill whenever classifying Linear tickets for sprints, estimating work, deciding autopilot eligibility, or routing issues to agents. Also use when someone asks about issue complexity, sprint capacity, or work categorization.
+description: Sprint issue classification reference -- complexity tiers, parallelizability categories, team routing, estimation matrix, autosprint handoff enrichment, and priority scoring. Use this skill whenever classifying Linear tickets for sprints, estimating work, deciding autosprint handoff eligibility, or routing issues to agents. Also use when someone asks about issue complexity, sprint capacity, or work categorization.
 metadata:
-  capabilities: sprint-leadership, team-coordination, sprint-execution
+  capabilities: sprint-leadership, team-coordination, sprint-planning
 ---
 
 ## Actions
@@ -19,13 +19,13 @@ metadata:
 2. Determine parallelizability category (ai-parallel/human-ai/human-required) using Section 2
 3. Apply estimation matrix from Section 4 to produce hour estimates
 4. Score priority using the combined formula from Section 6
-5. Check autopilot eligibility using Section 8 enrichment checklist
+5. Check autosprint handoff eligibility using Section 8 enrichment checklist
 6. Return structured JSON per Section 7 output schema
 
 **Checks**:
 - Every issue has complexity, parallelizability, and estimate populated
 - No weekend work blocks weekday critical path (Section 5)
-- Autopilot-tagged tickets have required labels, acceptance criteria, and estimates
+- Autosprint handoff candidates tagged with Linear `autopilot` have required labels, acceptance criteria, and estimates
 - Priority scores calculated consistently across batch
 
 **Stop Conditions**:
@@ -127,7 +127,7 @@ Tasks requiring significant human judgment and oversight.
 
 Reference: `team-members.json` for complete structure.
 
-> **Note:** Agent routing (general-purpose vs language-specific engineers) is determined at execution time by Agent based on current operational state. Refer to `workspace:development-pipeline` for the pipeline order.
+> **Note:** Agent routing suggestions are planning metadata for handoff. Workspace-agent `autosprint` resolves runtime details during execution.
 
 ### Engineering Teams (Reports to Addy)
 
@@ -283,7 +283,7 @@ Return this JSON structure for each classified issue:
 | complexity | enum | low, medium, high |
 | parallelizable | enum | ai-parallel, human-ai, human-required |
 | estimateHours | number | Estimated hours to complete |
-| suggestedAgent | string | Language + role (e.g., "typescript engineer"); agent type resolved at runtime by Agent |
+| suggestedAgent | string | Language + role (e.g., "typescript engineer"); planning hint for the autosprint execution owner |
 | weekendOk | boolean | Can be stretch goal |
 | dependencies | string[] | Blocking issue IDs |
 | goalAlignment | string | Which goal this advances |
@@ -291,13 +291,13 @@ Return this JSON structure for each classified issue:
 
 ---
 
-## 8. Autopilot Enrichment Checklist
+## 8. Autosprint Handoff Enrichment Checklist
 
-Reference for auditing tickets against autopilot eligibility requirements.
+Reference for auditing tickets against autosprint handoff requirements. This prepares tickets for the workspace-agent `autosprint` execution surface; it does not launch work or manage runtime state.
 
 ### Label Gate
 
-Every autopilot-eligible ticket MUST have:
+Every autosprint handoff candidate MUST have:
 
 | Label Type | Valid Values | Required |
 |-----------|-------------|----------|
@@ -338,7 +338,7 @@ When a ticket has a project label but no language label, infer language:
   "issueId": "WOR-240",
   "identifier": "WOR-240",
   "title": "Issue title",
-  "status": "ready | needs-enrichment",
+  "handoff_status": "ready | needs-enrichment",
   "missing_labels": ["typescript"],
   "missing_estimate": true,
   "missing_acceptance_criteria": false,
@@ -350,25 +350,20 @@ When a ticket has a project label but no language label, infer language:
 
 ---
 
-## 9. Development Pipeline Integration
+## 9. Autosprint Execution Boundary
 
-All ticket execution follows the `workspace:development-pipeline` skill as the canonical pipeline order. This applies to both manual and autopilot ticket execution.
+Company Sprint prepares classification, estimates, label recommendations, and acceptance-criteria gaps. Workspace-agent `autosprint` owns sprint-ticket execution, launch/runtime state, task inbox behavior, and PR pipeline details.
 
-### Pipeline Order
+### Handoff Contract
 
-1. **Codex reviewer** -- reviews ticket context, Slack threads, and supporting information
-2. **Language architect** -- reviews Codex output, designs implementation approach
-3. **Engineer** -- implements using TDD (red/green cycle)
-4. **Code reviewer** -- reviews implementation for quality, patterns, and standards
-5. **Security reviewer** -- reviews for vulnerabilities, secret exposure, and access control
-6. **PR creation** -- branch, commit, push, and open PR with full context
+For autosprint handoff, provide:
 
-### Key Rules
+- Linear issue identifier and URL
+- Confirmed labels, including the `autopilot` opt-in label when approved
+- Estimate, complexity, parallelizability, and suggested discipline
+- Acceptance criteria gaps or confirmation that the ticket is ready
 
-- Agent type (general-purpose vs language-specific) resolved at runtime by Agent
-- Load `workspace:development-pipeline` skill for pipeline order
-- Each pipeline step produces artifacts consumed by the next step
-- If any step fails, fix and re-run that step before proceeding
+If the user asks to execute sprint tickets, route them to workspace-agent `autosprint`.
 
 ---
 
