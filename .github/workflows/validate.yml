@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -37,3 +39,8 @@ jobs:
 
       - name: Validate manifests
         run: python3 scripts/validate-manifests.py
+
+      - name: Validate plugin versions
+        uses: ./.github/actions/version-validator
+        with:
+          base-ref: ${{ github.base_ref }}
