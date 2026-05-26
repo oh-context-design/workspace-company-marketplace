@@ -42,7 +42,7 @@ metadata:
 
 # Sprint Planning Operations Reference
 
-Reference data for sprint operations. Provides velocity calculation, standup structure, retrospective patterns, goal alignment, and calendar integration formats.
+Reference data for sprint operations: velocity calculation, standup structure, retrospective patterns, goal alignment, and calendar integration formats.
 
 ---
 

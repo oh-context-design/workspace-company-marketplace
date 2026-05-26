@@ -9,36 +9,36 @@ Source: Jacob Tyler, PlayforThoughts
 1. **True Simplicity**
    > "Simplicity is not the absence of clutter, that's a consequence of simplicity."
 
-   Genuine simplicity emerges when purpose and function are evident. Real simplicity happens when design choices feel inevitable and uncontrived.
+   Emerges when purpose and function are evident and design choices feel inevitable.
 
 2. **Craft & Care**
    > "What we make testifies who we are. People can sense care and sense carelessness."
 
-   Design reflects the maker's respect. Carelessness is personally offensive because it disrespects the user's experience and attention.
+   Design reflects the maker's respect; carelessness disrespects the user's experience and attention.
 
 3. **Innovation Through Iteration**
    > "There's no learning without trying lots of ideas and failing lots of times."
 
-   Roughly 80% of studio work fails, but this failure rate indicates genuine pushing of boundaries rather than playing it safe.
+   ~80% of studio work fails - a sign of pushing boundaries rather than playing safe.
 
 4. **Different ≠ Better**
    > "Different and new is relatively easy. Doing something genuinely better is very hard."
 
-   The goal transcends novelty to achieve functional superiority that serves users intuitively.
+   The goal is functional superiority that serves users intuitively, not novelty.
 
 5. **Invisible Excellence**
    > "When something exceeds your ability to understand how it works, it becomes magical."
 
-   The best designs hide complexity. Users experience seamless functionality without perceiving the engineering beneath.
+   The best designs hide complexity - seamless functionality without perceiving the engineering beneath.
 
 6. **Business Purpose**
    > "Apple's goal isn't to make money. Our goal is to design and develop good products."
 
-   Profitability follows from prioritizing user value and product quality over financial targets.
+   Profitability follows from prioritizing user value and product quality.
 
 ### Invisible Details
 
-The jellyfish on Apple Watch took 285 hours to shoot (24,000 shots) - not a quick animation. Users feel these invisible details even if they don't consciously see them.
+The Apple Watch jellyfish took 285 hours to shoot (24,000 shots). Users feel these invisible details even without consciously seeing them.
 
 > "When somebody unwrapped that box and took out that cable and they thought 'somebody gave a shit about me' I think that's a spiritual thing."
 

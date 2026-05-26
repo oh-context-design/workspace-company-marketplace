@@ -54,14 +54,12 @@ Source: AWS Executive Insights
 
 1. **Customer Obsession**
    > "Leaders start with the customer and work backwards. They work vigorously to earn and keep customer trust."
-   - 90% of AWS features originate from direct customer feedback
-   - 10% comes from anticipating unstated customer needs
-   - Avoid inventing in isolation; let customer pain points drive innovation
+   - 90% of AWS features originate from direct customer feedback, 10% from anticipating unstated needs
+   - Let customer pain points drive innovation, not isolated invention
 
 2. **Long-Term Focus Over Short-Term Profit**
    > "We are internally driven to improve our services, adding benefits and features, before we have to."
-   - Lower prices and increase value proactively
-   - Invent ahead of market demand
+   - Lower prices and add value proactively; invent ahead of market demand
    - Resist Day 2 mentality: stasis → irrelevance → decline
 
 3. **High-Velocity Decision-Making**
