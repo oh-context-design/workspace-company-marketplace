@@ -5,32 +5,6 @@ metadata:
   capabilities: git-workflow, branch-management, repository-management
 ---
 
-## Actions
-
-**Goal**: Single sentence description of what this skill provides or enables.
-
-**Inputs**:
-- Description of what the user or calling agent provides
-
-**Steps**:
-1. First atomic step
-2. Second atomic step
-3. Third atomic step (if applicable)
-
-**Checks**:
-- Verification that output is correct
-- Any assertions or validations
-
-**Stop Conditions**:
-- When to stop and ask the user for clarification
-- When to request additional information
-
-**Recovery**:
-- How to handle errors gracefully
-- Fallback strategies if primary approach fails
-
----
-
 # Worktree Decision Framework
 
 Reference for agents that coordinate parallel feature development.
@@ -39,15 +13,12 @@ Reference for agents that coordinate parallel feature development.
 
 ## When to Suggest Worktrees
 
-Suggest worktrees when ANY of these conditions apply:
+Suggest worktrees when ANY of these apply:
 
-1. **Multi-feature sprints with independent tasks** - Features that don't share code paths or dependencies
-
-2. **Large refactors with decoupled subsystems** - Different subsystems can be modified in isolation
-
-3. **Phased work with parallel opportunities** - Early phases could run simultaneously
-
-4. **Multiple engineers or agent instances** - Concurrent work on different features
+1. **Multi-feature sprints with independent tasks** - features that don't share code paths or dependencies
+2. **Large refactors with decoupled subsystems** - subsystems modifiable in isolation
+3. **Phased work with parallel opportunities** - early phases could run simultaneously
+4. **Multiple engineers or agent instances** - concurrent work on different features
 
 ---
 

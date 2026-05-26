@@ -8,7 +8,7 @@ metadata:
 
 # Crew FTAX — Identity Creation Templates
 
-Templates and question bank for generating agent identity files. All templates are derived from Agent's identity structure, generalized for any agent.
+Templates and question bank for generating agent identity files, derived from Agent's identity structure and generalized for any agent.
 
 ---
 

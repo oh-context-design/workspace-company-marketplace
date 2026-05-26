@@ -11,32 +11,6 @@ metadata:
   capabilities: strategic-decision-making, business-strategy, decision-frameworks
 ---
 
-## Actions
-
-**Goal**: Single sentence description of what this skill provides or enables.
-
-**Inputs**:
-- Description of what the user or calling agent provides
-
-**Steps**:
-1. First atomic step
-2. Second atomic step
-3. Third atomic step (if applicable)
-
-**Checks**:
-- Verification that output is correct
-- Any assertions or validations
-
-**Stop Conditions**:
-- When to stop and ask the user for clarification
-- When to request additional information
-
-**Recovery**:
-- How to handle errors gracefully
-- Fallback strategies if primary approach fails
-
----
-
 # Strategic Framework Skill
 
 Executive decision-making frameworks and leadership philosophies for the Company plugin.

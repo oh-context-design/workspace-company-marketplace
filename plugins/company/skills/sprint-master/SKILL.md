@@ -42,7 +42,7 @@ metadata:
 
 # Sprint Master Classification Reference
 
-Reference data for classifying sprint issues. Provides complexity definitions, parallelizability categories, team agent routing, and estimation guidelines.
+Reference data for classifying sprint issues: complexity definitions, parallelizability categories, team routing, and estimation guidelines.
 
 ---
 

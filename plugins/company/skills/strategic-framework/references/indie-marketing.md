@@ -6,13 +6,11 @@ Strategic marketing frameworks for indie developers and bootstrapped apps. Extra
 
 ### The Visibility Problem
 
-A great app that nobody knows about is still a great app that nobody knows about. Without an audience, even stellar apps fail commercially. Marketing feels uncomfortable initially, but treating it with the same rigor as coding accelerates growth.
+Without an audience, even stellar apps fail commercially. Marketing feels uncomfortable, but treating it with the same rigor as coding accelerates growth.
 
 ### Vibe Marketing
 
-Embrace action over perfection. Put together creatives and run paid ads even without knowing best practices. There's too much to learn academically—try something and learn on the job.
-
-The underlying principle: it's not the mistakes that will kill you, it's the not trying.
+Action over perfection: run creatives and paid ads even without knowing best practices, and learn on the job. It's not the mistakes that kill you, it's the not trying.
 
 ## Strategic Frameworks
 
@@ -20,9 +18,9 @@ The underlying principle: it's not the mistakes that will kill you, it's the not
 
 Run two types of projects:
 
-**Business App**: Prioritizes growth, revenue, scalability. Funds everything else.
+**Business App**: prioritizes growth, revenue, scalability. Funds everything else.
 
-**Boutique App**: Creative playground without commercial pressure. Permits exhaustive polish, aggressive adoption of new frameworks, prioritizing technical novelty over market demands.
+**Boutique App**: creative playground without commercial pressure - exhaustive polish, new frameworks, technical novelty over market demands.
 
 Prerequisites for boutique work:
 - Financial stability from the business app
