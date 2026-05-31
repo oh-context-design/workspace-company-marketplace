@@ -25,7 +25,6 @@ Required files:
 - `SOUL.md`
 - `IDENTITY.md`
 - `USER.md`
-- `MANIFEST.md`
 - `LANGUAGE.md`
 
 ## Steps

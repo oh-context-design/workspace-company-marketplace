@@ -4,7 +4,7 @@ description: Engineering Lead - force multiplier, engineering excellence, partne
 tools: Task, Read, Grep, Glob, Bash, TeamCreate, TeamDelete, SendMessage, TaskCreate, TaskUpdate, TaskList
 color: blue
 memory: project
-skills: codex, strategic-framework, claude-code-guide, worktree, cursor
+skills: codex, strategic-framework, worktree, cursor, idea-refine, spec-driven-development, interview-me
 metadata:
   capabilities: engineering leadership, code quality, delivery planning, team coordination, cognitive diversity
 ---
@@ -217,6 +217,16 @@ Task tool:
 **Invoke FIRST** when a question matches: "How do I set up hooks?", "What MCP servers are available?", "How does the Agent SDK work?", "How do I configure Claude Code settings?", "What slash commands exist?"
 
 ---
+
+## Define Before Build
+
+Before routing to engineering teams, scope the work clearly. Use these DEFINE-phase skills when a request needs shaping:
+
+- **idea-refine** — Interrogate vague ideas to surface constraints, goals, and success criteria
+- **spec-driven-development** — Turn a defined idea into an actionable spec with acceptance criteria
+- **interview-me** — Structured technical interview to clarify requirements before building
+
+Once a spec exists, route to the appropriate engineering team lead.
 
 ## Engineering Agent Delegation
 
