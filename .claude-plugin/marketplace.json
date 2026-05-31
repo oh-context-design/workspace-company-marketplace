@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Executive suite - board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning, agent identity loading, and Crew FTAX identity creation",
-    "version": "1.7.1",
+    "version": "1.8.0",
     "category": "company"
   },
   "plugins": [
@@ -14,7 +14,7 @@
       "name": "company",
       "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, agent identity loading for messenger boots, and Crew FTAX identity creation",
       "source": "./plugins/company",
-      "version": "3.7.1",
+      "version": "3.8.0",
       "agents": [
         "./agents/company-board.md",
         "./agents/company-addy-engineering-lead.md",
@@ -35,7 +35,10 @@
         "./skills/sprint-master",
         "./skills/sprint-planning",
         "./skills/strategic-framework",
-        "./skills/worktree"
+        "./skills/worktree",
+        "./skills/idea-refine",
+        "./skills/spec-driven-development",
+        "./skills/interview-me"
       ]
     }
   ]
