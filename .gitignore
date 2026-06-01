@@ -1,3 +1,19 @@
 __pycache__/
 
 dist/
+
+# Worktrees
+.worktree/
+.worktrees/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Environment
+.env
