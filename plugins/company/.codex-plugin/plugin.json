@@ -1,0 +1,27 @@
+{
+  "name": "company",
+  "version": "3.8.1",
+  "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, and agent identity loading",
+  "author": {
+    "name": "cowork-codebendr",
+    "email": "ohcontextdesign@gmail.com"
+  },
+  "interface": {
+    "displayName": "Company",
+    "shortDescription": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, and agent identity loading",
+    "longDescription": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, and agent identity loading",
+    "developerName": "cowork-codebendr",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use Company"
+    ],
+    "brandColor": "#2563EB",
+    "screenshots": []
+  },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}
