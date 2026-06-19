@@ -12,6 +12,7 @@ Executive suite plugin for Claude Code.
 | /company:addy | Engineering Lead - delivery, quality, team coordination |
 | /company:alara | Product Engineer - design leadership, product strategy |
 | /company:sprint | Sprint planning, Addy + Alara classification, scheduling, and autosprint handoff preparation |
+| company:ekua-manager | Manager workflow for visible workers, subagents, check-ins, plan/verify/review/merge/sync/cleanup |
 | /company:agent-identity | Load an agent identity from the active session files. Used by the Slack messenger harness to boot the messenger agent. |
 | /company:crew-ftax | Guided agent identity creation. Generates SOUL.md, IDENTITY.md, USER.md, CLAUDE.md through Q&A. Moved from `/workspace:crew-ftax` (AGI-23). |
 
@@ -29,6 +30,10 @@ Executive suite plugin for Claude Code.
 Company owns sprint planning, classification, scheduling, and handoff inputs through `/company:sprint`. It may mark Linear tickets with the `autopilot` label when they are approved for autosprint handoff, but it does not launch tasks, manage runtime state, or own PR pipeline behavior.
 
 `autosprint` is the workspace-agent plugin/skill/script that executes sprint tickets. Messenger lifecycle belongs to `agent-messenger`, Ghostty task mechanics belong to `ghostty-tasks`, and task-side inbox tools belong to `agent-inbox-mcp`.
+
+## 2.2. Ekua-Manager
+
+`company:ekua-manager` is the durable manager workflow skill for plan, grooming, worker selection, visible check-ins, verification, review, versioning, merge, sync, and cleanup. It is packaged in Company so Claude Code and Codex can load the same manager contract from the plugin harness instead of relying on a local-only Codex skill copy.
 
 ## 3. Team Structure
 
