@@ -1,5 +1,9 @@
 __pycache__/
 
+# Codex plugin install mirrors (runtime/generated)
+/codex-plugins/
+/.codex-plugin/
+
 dist/
 
 # Worktrees

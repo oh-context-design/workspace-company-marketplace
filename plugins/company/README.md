@@ -1,7 +1,7 @@
 # Company Plugin
 
-**Version:** 2.6.0
-**Description:** Executive suite for strategic decision-making with design-first board orchestration.
+**Version:** 3.8.2
+**Description:** Executive suite for strategic decision-making, sprint planning, and Ekua-Manager workflow coordination.
 
 ## Team Structure
 
@@ -23,7 +23,8 @@ Execution Leads (Equal Peers)
     └── Manages: Design reviewers
 
 Coordination
-└── Sprint (cyan) - Orchestrates Addy + Alara
+├── Sprint (cyan) - Orchestrates Addy + Alara
+└── Ekua-Manager - Coordinates worker selection, check-ins, integration, verification, merge, sync, and cleanup
 ```
 
 ## Commands
@@ -69,6 +70,12 @@ Generic identity loader for company agents:
 - Applies the agent's voice, protocol, and security posture to the session
 - Lets messenger harnesses boot the active agent without a dedicated wrapper
 
+### ekua-manager
+Manager workflow for Claude Code and Codex:
+- Selects between main-thread execution, visible Codex app workers, and bounded subagents
+- Runs the plan, groom, execute, verify, review, version, merge, sync, and cleanup lifecycle
+- Defines 10-minute check-in behavior and worker status expectations
+
 ## Usage Examples
 
 ```bash
@@ -88,6 +95,9 @@ Generic identity loader for company agents:
 
 # Load an agent identity into the current session
 /company:agent-identity araba
+
+# Load the manager workflow
+Skill("company:ekua-manager")
 ```
 
 ## Integration
@@ -96,9 +106,14 @@ Generic identity loader for company agents:
 - **Addy** → Routes to Swift/Python/TypeScript specialists
 - **Alara** → Routes to design plugin reviewers
 - **Sprint** → Uses Linear MCP, Google Calendar MCP, Notion MCP, and produces handoff inputs for workspace-agent autosprint execution
+- **Ekua-Manager** → Coordinates worker workflows across Claude Code and Codex while keeping the main thread responsible for integration and final decisions
 
 ## Version History
 
+- **3.8.2** (2026-06-19): Package Ekua-Manager for Claude Code and Codex
+  - Added `company:ekua-manager` skill to the Company plugin harness
+  - Published the manager workflow through Claude and Codex plugin manifests
+  - Documented the shared manager workflow in root and plugin docs
 - **2.6.0** (2025-01-05): Consolidate Luna → Alara, team-members.json
   - Renamed company-luna → company-alara-product-engineer
   - Renamed company-addy → company-addy-engineering-lead
