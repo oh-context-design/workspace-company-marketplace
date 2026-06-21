@@ -7,17 +7,17 @@
  * Issues in the cycle become unassigned from the cycle when archived.
  */
 
-import type { TDeleteCycleInput } from "../schemas/index.js";
-import type { TToolResponse } from "./base.js";
+import type { DeleteCycleInput } from "../schemas/index.js";
+import type { ToolResponse } from "./base.js";
 import { createSuccessResponse, createErrorResponse } from "./base.js";
 import { executeGraphQL } from "../client/linear.js";
 import { ARCHIVE_CYCLE_MUTATION, GET_CYCLE_QUERY } from "../graphql/mutations.js";
-import type { TCycle } from "../types/cycle.js";
+import type { Cycle } from "../types/cycle.js";
 
 /**
  * Result type for archive cycle mutation
  */
-type TArchiveCycleResult = {
+type ArchiveCycleResult = {
   cycleArchive: {
     success: boolean;
   };
@@ -26,8 +26,8 @@ type TArchiveCycleResult = {
 /**
  * Result type for get cycle query
  */
-type TGetCycleResult = {
-  cycle: TCycle | null;
+type GetCycleResult = {
+  cycle: Cycle | null;
 };
 
 /**
@@ -40,8 +40,8 @@ type TGetCycleResult = {
  * @returns Tool response with success status or error
  */
 export async function handleDeleteCycle(
-  input: TDeleteCycleInput
-): Promise<TToolResponse> {
+  input: DeleteCycleInput
+): Promise<ToolResponse> {
   const { cycleId } = input;
 
   try {
@@ -50,7 +50,7 @@ export async function handleDeleteCycle(
     let cycleNumber: number | null = null;
 
     try {
-      const cycleResult = await executeGraphQL<TGetCycleResult>(
+      const cycleResult = await executeGraphQL<GetCycleResult>(
         GET_CYCLE_QUERY,
         { id: cycleId }
       );
@@ -83,7 +83,7 @@ export async function handleDeleteCycle(
     }
 
     // Step 2: Execute archive mutation
-    const result = await executeGraphQL<TArchiveCycleResult>(
+    const result = await executeGraphQL<ArchiveCycleResult>(
       ARCHIVE_CYCLE_MUTATION,
       { id: cycleId }
     );

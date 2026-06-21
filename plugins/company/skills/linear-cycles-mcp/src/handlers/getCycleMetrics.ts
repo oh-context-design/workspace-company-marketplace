@@ -4,10 +4,10 @@
  * Retrieves velocity and completion metrics for a cycle.
  */
 
-import type { TGetCycleMetricsInput } from "../schemas/index.js";
-import type { TToolResponse } from "./base.js";
-import type { TCycle } from "../types/cycle.js";
-import type { TCycleIssue, TCycleMetrics } from "../types/metrics.js";
+import type { GetCycleMetricsInput } from "../schemas/index.js";
+import type { ToolResponse } from "./base.js";
+import type { Cycle } from "../types/cycle.js";
+import type { CycleIssue, CycleMetrics } from "../types/metrics.js";
 import { createErrorResponse } from "./base.js";
 import { executeGraphQL } from "../client/linear.js";
 import {
@@ -18,19 +18,19 @@ import {
 /**
  * GraphQL response types
  */
-type TCycleWithIssues = TCycle & {
+type CycleWithIssues = Cycle & {
   issues: {
-    nodes: Array<TCycleIssue>;
+    nodes: Array<CycleIssue>;
   };
 };
 
-type TGetCycleResult = {
-  cycle: TCycleWithIssues;
+type GetCycleResult = {
+  cycle: CycleWithIssues;
 };
 
-type TGetCurrentCycleResult = {
+type GetCurrentCycleResult = {
   team: {
-    activeCycle: TCycleWithIssues | null;
+    activeCycle: CycleWithIssues | null;
   };
 };
 
@@ -44,7 +44,7 @@ function daysBetween(start: Date, end: Date): number {
 /**
  * Calculate metrics from cycle data
  */
-function calculateMetrics(cycle: TCycleWithIssues): TCycleMetrics {
+function calculateMetrics(cycle: CycleWithIssues): CycleMetrics {
   const now = new Date();
   const startsAt = new Date(cycle.startsAt);
   const endsAt = new Date(cycle.endsAt);
@@ -122,7 +122,7 @@ function calculateMetrics(cycle: TCycleWithIssues): TCycleMetrics {
 /**
  * Count issues by status type for display
  */
-type TIssuesByStatus = {
+type IssuesByStatus = {
   completed: number;
   started: number;
   unstarted: number;
@@ -130,7 +130,7 @@ type TIssuesByStatus = {
   canceled: number;
 };
 
-function countIssuesByStatus(issues: Array<TCycleIssue>): TIssuesByStatus {
+function countIssuesByStatus(issues: Array<CycleIssue>): IssuesByStatus {
   return {
     completed: issues.filter((i) => i.state.type === "completed").length,
     started: issues.filter((i) => i.state.type === "started").length,
@@ -144,8 +144,8 @@ function countIssuesByStatus(issues: Array<TCycleIssue>): TIssuesByStatus {
  * Format metrics as ASCII display
  */
 function formatMetricsDisplay(
-  metrics: TCycleMetrics,
-  issuesByStatus: TIssuesByStatus
+  metrics: CycleMetrics,
+  issuesByStatus: IssuesByStatus
 ): string {
   const cycleName = metrics.cycleName ?? `Cycle ${metrics.cycleNumber}`;
   const headerLine = `CYCLE METRICS: ${cycleName}`;
@@ -176,10 +176,10 @@ function formatMetricsDisplay(
  * @returns Tool response with metrics or error
  */
 export async function handleGetCycleMetrics(
-  input: TGetCycleMetricsInput
-): Promise<TToolResponse> {
+  input: GetCycleMetricsInput
+): Promise<ToolResponse> {
   try {
-    let cycle: TCycleWithIssues;
+    let cycle: CycleWithIssues;
 
     if (input.cycleId === "current") {
       // Fetch current active cycle for team
@@ -189,7 +189,7 @@ export async function handleGetCycleMetrics(
         );
       }
 
-      const result = await executeGraphQL<TGetCurrentCycleResult>(
+      const result = await executeGraphQL<GetCurrentCycleResult>(
         GET_CURRENT_CYCLE_QUERY,
         { teamId: input.teamId }
       );
@@ -201,7 +201,7 @@ export async function handleGetCycleMetrics(
       cycle = result.team.activeCycle;
     } else {
       // Fetch cycle by ID
-      const result = await executeGraphQL<TGetCycleResult>(GET_CYCLE_QUERY, {
+      const result = await executeGraphQL<GetCycleResult>(GET_CYCLE_QUERY, {
         id: input.cycleId,
       });
 

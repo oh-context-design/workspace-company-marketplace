@@ -51,7 +51,7 @@ export const createCycleSchema = z.object({
     .describe("Optional description or goals for the cycle"),
 });
 
-export type TCreateCycleInput = z.infer<typeof createCycleSchema>;
+export type CreateCycleInput = z.infer<typeof createCycleSchema>;
 
 /**
  * Base schema for update_cycle tool (used for MCP tool registration)
@@ -97,7 +97,7 @@ export const updateCycleSchema = updateCycleBaseSchema.refine(
   }
 );
 
-export type TUpdateCycleInput = z.infer<typeof updateCycleSchema>;
+export type UpdateCycleInput = z.infer<typeof updateCycleSchema>;
 
 /**
  * Schema for delete_cycle tool
@@ -111,7 +111,7 @@ export const deleteCycleSchema = z.object({
     .describe("The UUID of the cycle to delete"),
 });
 
-export type TDeleteCycleInput = z.infer<typeof deleteCycleSchema>;
+export type DeleteCycleInput = z.infer<typeof deleteCycleSchema>;
 
 /**
  * Base schema for get_cycle_metrics tool (used for MCP tool registration)
@@ -151,7 +151,7 @@ export const getCycleMetricsSchema = getCycleMetricsBaseSchema.refine(
   }
 );
 
-export type TGetCycleMetricsInput = z.infer<typeof getCycleMetricsSchema>;
+export type GetCycleMetricsInput = z.infer<typeof getCycleMetricsSchema>;
 
 /**
  * Schema for manage_auth tool
@@ -173,4 +173,4 @@ export const manageAuthSchema = z.object({
     ),
 });
 
-export type TManageAuthInput = z.infer<typeof manageAuthSchema>;
+export type ManageAuthInput = z.infer<typeof manageAuthSchema>;

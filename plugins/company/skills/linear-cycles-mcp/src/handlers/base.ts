@@ -7,7 +7,7 @@
 /**
  * MCP tool response format
  */
-export type TToolResponse = {
+export type ToolResponse = {
   content: Array<{
     type: "text";
     text: string;
@@ -20,7 +20,7 @@ export type TToolResponse = {
  *
  * @param data - Response data to serialize as JSON
  */
-export function createSuccessResponse<T>(data: T): TToolResponse {
+export function createSuccessResponse<T>(data: T): ToolResponse {
   return {
     content: [
       {
@@ -40,7 +40,7 @@ export function createSuccessResponse<T>(data: T): TToolResponse {
 export function createErrorResponse(
   message: string,
   details?: Record<string, unknown>
-): TToolResponse {
+): ToolResponse {
   const errorData = {
     success: false,
     error: message,
@@ -63,4 +63,4 @@ export function createErrorResponse(
  *
  * All handlers should follow this signature pattern.
  */
-export type THandler<TInput> = (input: TInput) => Promise<TToolResponse>;
+export type Handler<Input> = (input: Input) => Promise<ToolResponse>;

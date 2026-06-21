@@ -4,9 +4,9 @@
  * Updates an existing Linear cycle's properties.
  */
 
-import type { TUpdateCycleInput } from "../schemas/index.js";
-import type { TCycle } from "../types/cycle.js";
-import type { TToolResponse } from "./base.js";
+import type { UpdateCycleInput } from "../schemas/index.js";
+import type { Cycle } from "../types/cycle.js";
+import type { ToolResponse } from "./base.js";
 import { createErrorResponse } from "./base.js";
 import { executeGraphQL } from "../client/linear.js";
 import { UPDATE_CYCLE_MUTATION } from "../graphql/mutations.js";
@@ -14,10 +14,10 @@ import { UPDATE_CYCLE_MUTATION } from "../graphql/mutations.js";
 /**
  * GraphQL mutation result type
  */
-type TUpdateCycleResult = {
+type UpdateCycleResult = {
   cycleUpdate: {
     success: boolean;
-    cycle?: TCycle;
+    cycle?: Cycle;
   };
 };
 
@@ -37,7 +37,7 @@ function toISODateTime(dateStr: string): string {
  * @param input - Update cycle input
  * @returns Array of field names that were updated
  */
-function getChangedFields(input: TUpdateCycleInput): Array<string> {
+function getChangedFields(input: UpdateCycleInput): Array<string> {
   const fields: Array<string> = [];
 
   if (input.name !== undefined) fields.push("name");
@@ -55,8 +55,8 @@ function getChangedFields(input: TUpdateCycleInput): Array<string> {
  * @returns Tool response with updated cycle or error
  */
 export async function handleUpdateCycle(
-  input: TUpdateCycleInput
-): Promise<TToolResponse> {
+  input: UpdateCycleInput
+): Promise<ToolResponse> {
   try {
     // Collect changed fields for response message
     const changedFields = getChangedFields(input);
@@ -84,7 +84,7 @@ export async function handleUpdateCycle(
     }
 
     // Execute the mutation
-    const result = await executeGraphQL<TUpdateCycleResult>(
+    const result = await executeGraphQL<UpdateCycleResult>(
       UPDATE_CYCLE_MUTATION,
       variables
     );
