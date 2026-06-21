@@ -7,7 +7,7 @@
 /**
  * Represents a Linear cycle (sprint)
  */
-export type TCycle = {
+export type Cycle = {
   id: string;
   number: number;
   name: string | null;
@@ -32,7 +32,7 @@ export type TCycle = {
 /**
  * Input for creating a new cycle
  */
-export type TCycleCreateInput = {
+export type CycleCreateInput = {
   teamId: string;
   name?: string;
   description?: string;
@@ -43,7 +43,7 @@ export type TCycleCreateInput = {
 /**
  * Input for updating an existing cycle
  */
-export type TCycleUpdateInput = {
+export type CycleUpdateInput = {
   cycleId: string;
   name?: string;
   description?: string;
@@ -54,15 +54,15 @@ export type TCycleUpdateInput = {
 /**
  * Input for deleting a cycle
  */
-export type TCycleDeleteInput = {
+export type CycleDeleteInput = {
   cycleId: string;
 };
 
 /**
  * Response from cycle mutation operations
  */
-export type TCycleMutationResponse = {
+export type CycleMutationResponse = {
   success: boolean;
-  cycle?: TCycle;
+  cycle?: Cycle;
   error?: string;
 };

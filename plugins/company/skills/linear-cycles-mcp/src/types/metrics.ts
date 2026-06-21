@@ -7,7 +7,7 @@
 /**
  * Issue summary within a cycle
  */
-export type TCycleIssue = {
+export type CycleIssue = {
   id: string;
   identifier: string;
   title: string;
@@ -22,7 +22,7 @@ export type TCycleIssue = {
 /**
  * Cycle performance metrics
  */
-export type TCycleMetrics = {
+export type CycleMetrics = {
   cycleId: string;
   cycleName: string | null;
   cycleNumber: number;
@@ -61,7 +61,7 @@ export type TCycleMetrics = {
 /**
  * Input for getting cycle metrics
  */
-export type TGetCycleMetricsInput = {
+export type GetCycleMetricsInput = {
   cycleId: string; // Can be UUID or "current"
   teamId?: string; // Required if cycleId is "current"
 };
@@ -69,9 +69,9 @@ export type TGetCycleMetricsInput = {
 /**
  * Response from metrics query
  */
-export type TCycleMetricsResponse = {
+export type CycleMetricsResponse = {
   success: boolean;
-  metrics?: TCycleMetrics;
-  issues?: Array<TCycleIssue>;
+  metrics?: CycleMetrics;
+  issues?: Array<CycleIssue>;
   error?: string;
 };

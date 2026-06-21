@@ -4,20 +4,20 @@
  * Creates a new cycle for a Linear team.
  */
 
-import type { TCreateCycleInput } from "../schemas/index.js";
-import type { TToolResponse } from "./base.js";
+import type { CreateCycleInput } from "../schemas/index.js";
+import type { ToolResponse } from "./base.js";
 import { createErrorResponse } from "./base.js";
 import { executeGraphQL } from "../client/linear.js";
 import { CREATE_CYCLE_MUTATION } from "../graphql/mutations.js";
-import type { TCycle } from "../types/cycle.js";
+import type { Cycle } from "../types/cycle.js";
 
 /**
  * Response type for the cycleCreate mutation
  */
-type TCreateCycleResult = {
+type CreateCycleResult = {
   cycleCreate: {
     success: boolean;
-    cycle?: TCycle;
+    cycle?: Cycle;
   };
 };
 
@@ -48,8 +48,8 @@ function formatDateForDisplay(isoDate: string): string {
  * @returns Tool response with created cycle or error
  */
 export async function handleCreateCycle(
-  input: TCreateCycleInput
-): Promise<TToolResponse> {
+  input: CreateCycleInput
+): Promise<ToolResponse> {
   try {
     // Convert date strings to ISO DateTime format for Linear API
     const variables = {
@@ -61,7 +61,7 @@ export async function handleCreateCycle(
     };
 
     // Execute the mutation
-    const result = await executeGraphQL<TCreateCycleResult>(
+    const result = await executeGraphQL<CreateCycleResult>(
       CREATE_CYCLE_MUTATION,
       variables
     );

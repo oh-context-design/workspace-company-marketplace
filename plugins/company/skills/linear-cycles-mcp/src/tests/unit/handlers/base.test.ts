@@ -8,7 +8,6 @@ import { describe, it, expect } from "vitest";
 import {
   createSuccessResponse,
   createErrorResponse,
-  type TToolResponse,
 } from "../../../handlers/base.js";
 
 describe("createSuccessResponse", () => {
@@ -149,7 +148,7 @@ describe("createErrorResponse", () => {
 });
 
 describe("Response interface compliance", () => {
-  it("success response conforms to TToolResponse", () => {
+  it("success response conforms to ToolResponse", () => {
     const response = createSuccessResponse({ data: "test" });
 
     // Should have content array
@@ -167,7 +166,7 @@ describe("Response interface compliance", () => {
     }
   });
 
-  it("error response conforms to TToolResponse", () => {
+  it("error response conforms to ToolResponse", () => {
     const response = createErrorResponse("Test error", { code: "ERR_001" });
 
     // Should have content array
