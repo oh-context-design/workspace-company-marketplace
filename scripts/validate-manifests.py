@@ -93,17 +93,22 @@ class FullValidationResult:
     manifest_path: str
     plugin_results: list[ValidationResult] = field(default_factory=list)
     manifest_errors: list[str] = field(default_factory=list)
+    unregistered_plugin_dirs: list[str] = field(default_factory=list)
 
     @property
     def is_valid(self) -> bool:
         if self.manifest_errors:
             return False
+        if self.unregistered_plugin_dirs:
+            return False
         return all(r.is_valid for r in self.plugin_results)
 
     @property
     def total_errors(self) -> int:
-        return len(self.manifest_errors) + sum(
-            len(r.errors) for r in self.plugin_results
+        return (
+            len(self.manifest_errors)
+            + len(self.unregistered_plugin_dirs)
+            + sum(len(r.errors) for r in self.plugin_results)
         )
 
     @property
@@ -117,8 +122,42 @@ class FullValidationResult:
             'total_errors': self.total_errors,
             'total_checked': self.total_checked,
             'manifest_errors': self.manifest_errors,
+            'unregistered_plugin_dirs': self.unregistered_plugin_dirs,
             'plugin_results': [r.to_dict() for r in self.plugin_results],
         }
+
+
+def _find_unregistered_plugin_dirs(
+    base_dir: Path,
+    plugins: list[dict[str, Any]]
+) -> list[str]:
+    """Find plugins/*/ directories on disk with no marketplace.json entry.
+
+    Guards against the manifest passing validation purely because every
+    *declared* path exists, while an undeclared plugin directory sits on
+    disk unregistered (silent integrity drift).
+    """
+    plugins_root = base_dir / 'plugins'
+    if not plugins_root.is_dir():
+        return []
+
+    registered: set[str] = set()
+    for plugin in plugins:
+        source = plugin.get('source', '')
+        clean_source = source[2:] if source.startswith('./') else source
+        try:
+            resolved = (base_dir / clean_source).resolve()
+        except (OSError, ValueError):
+            continue
+        registered.add(resolved.name)
+
+    unregistered = []
+    for entry in sorted(plugins_root.iterdir()):
+        if not entry.is_dir() or entry.name.startswith('.'):
+            continue
+        if entry.name not in registered:
+            unregistered.append(f'plugins/{entry.name}')
+    return unregistered
 
 
 def _resolve_path(
@@ -296,6 +335,8 @@ def validate_manifest_paths(
         plugin_result = _validate_plugin(plugin, base_dir)
         result.plugin_results.append(plugin_result)
 
+    result.unregistered_plugin_dirs = _find_unregistered_plugin_dirs(base_dir, plugins)
+
     return result
 
 
@@ -331,6 +372,12 @@ def format_validation_text(result: FullValidationResult) -> str:
         lines.append("Manifest Errors:")
         for error in result.manifest_errors:
             lines.append(f"  x {error}")
+        lines.append("")
+
+    if result.unregistered_plugin_dirs:
+        lines.append("Unregistered Plugin Directories:")
+        for unregistered_dir in result.unregistered_plugin_dirs:
+            lines.append(f"  x {unregistered_dir} (no marketplace.json entry)")
         lines.append("")
 
     valid_plugins = []
