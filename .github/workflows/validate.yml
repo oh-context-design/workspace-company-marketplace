@@ -12,9 +12,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v5
+      - uses: swift-actions/setup-swift@v2
         with:
-          python-version: '3.12'
+          swift-version: '5.9'
 
       - name: Validate branch name
         if: github.event.pull_request.head.ref != 'main'
@@ -31,14 +31,14 @@ jobs:
           fi
           echo "Branch name follows convention"
 
-      - name: Install dependencies
-        run: pip install pyyaml
+      - name: Run Swift validator tests
+        run: swift test
 
       - name: Validate frontmatter
-        run: python3 scripts/validate-frontmatter.py
+        run: swift run marketplace-validator frontmatter
 
       - name: Validate manifests
-        run: python3 scripts/validate-manifests.py
+        run: swift run marketplace-validator manifests
 
       - name: Validate plugin versions
         uses: ./.github/actions/version-validator
