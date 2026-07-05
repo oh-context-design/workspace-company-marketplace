@@ -7,13 +7,13 @@ inputs:
   repo-root:
     description: Repository root containing .claude-plugin/marketplace.json.
     required: false
-    default: '.'
+    default: "."
   base-ref:
     description: >-
       Base ref to diff against for the source-change bump check. Leave empty to
       run the sync check only. In a pull_request workflow pass the base branch.
     required: false
-    default: ''
+    default: ""
 
 runs:
   using: composite
@@ -35,4 +35,4 @@ runs:
             BASE_ARG="--base-ref ${BASE_REF}"
           fi
         fi
-        python3 "${GITHUB_ACTION_PATH}/validate-versions.py" --repo-root "${REPO_ROOT}" ${BASE_ARG}
+        swift "${GITHUB_ACTION_PATH}/validate-versions.swift" --repo-root "${REPO_ROOT}" ${BASE_ARG}

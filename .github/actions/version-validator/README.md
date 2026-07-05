@@ -34,10 +34,10 @@ Inputs:
 
 ```bash
 # sync check only
-python3 .github/actions/version-validator/validate-versions.py
+swift .github/actions/version-validator/validate-versions.swift
 
 # sync + bump check against origin/main
-python3 .github/actions/version-validator/validate-versions.py --base-ref origin/main
+swift .github/actions/version-validator/validate-versions.swift --base-ref origin/main
 
 # self-tests (synthetic fixtures, pass + both fail paths)
 bash .github/actions/version-validator/test-validate-versions.sh
@@ -72,7 +72,7 @@ drops in unchanged. For each repo:
    drift — the gate blocks all PRs until the repo is green:
 
    ```bash
-   python3 validate-versions.py --repo-root /path/to/repo
+   swift validate-versions.swift --repo-root /path/to/repo
    ```
 
 Do not modify the other repos as part of AGI-258; this section is the rollout
