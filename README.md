@@ -1,12 +1,12 @@
 # workspace-company-marketplace
 
-Executive suite marketplace for Claude Code and Codex. Provides board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning/classification/scheduling, Ekua-Manager workflow coordination, and generic agent identity loading.
+Executive suite marketplace for Claude Code and Codex. Provides board orchestration, engineering lead (Addy), product engineer (Alara), sprint planning/classification/scheduling, Delivery-Manager workflow coordination, and generic agent identity loading.
 
 ## Plugin
 
 | Plugin | Commands | Description |
 |--------|----------|-------------|
-| company | `/company:board`, `/company:addy`, `/company:alara`, `/company:sprint`, `/company:crew-ftax`, `/company:agent-identity <agent>` | Executive suite with strategic decision-making, sprint planning and autosprint handoff preparation, Ekua-Manager workflow coordination, identity loading for messenger boots, and Crew FTAX identity creation |
+| company | `/company:board`, `/company:addy`, `/company:alara`, `/company:sprint`, `/company:crew-ftax`, `/company:agent-identity <agent>` | Executive suite with strategic decision-making, sprint planning and autosprint handoff preparation, Delivery-Manager workflow coordination, identity loading for messenger boots, and Crew FTAX identity creation |
 
 ## Requirements
 

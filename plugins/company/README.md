@@ -1,7 +1,7 @@
 # Company Plugin
 
 **Version:** 3.8.2
-**Description:** Executive suite for strategic decision-making, sprint planning, and Ekua-Manager workflow coordination.
+**Description:** Executive suite for strategic decision-making, sprint planning, and Delivery-Manager workflow coordination.
 
 ## Team Structure
 
@@ -24,7 +24,7 @@ Execution Leads (Equal Peers)
 
 Coordination
 ├── Sprint (cyan) - Orchestrates Addy + Alara
-└── Ekua-Manager - Coordinates worker selection, check-ins, integration, verification, merge, sync, and cleanup
+└── Delivery-Manager - Coordinates worker selection, check-ins, integration, verification, merge, sync, and cleanup
 ```
 
 ## Commands
@@ -70,7 +70,7 @@ Generic identity loader for company agents:
 - Applies the agent's voice, protocol, and security posture to the session
 - Lets messenger harnesses boot the active agent without a dedicated wrapper
 
-### ekua-manager
+### delivery-manager
 Manager workflow for Claude Code and Codex:
 - Selects between main-thread execution, visible Codex app workers, and bounded subagents
 - Runs the plan, groom, execute, verify, review, version, merge, sync, and cleanup lifecycle
@@ -97,7 +97,7 @@ Manager workflow for Claude Code and Codex:
 /company:agent-identity araba
 
 # Load the manager workflow
-Skill("company:ekua-manager")
+Skill("company:delivery-manager")
 ```
 
 ## Integration
@@ -106,10 +106,13 @@ Skill("company:ekua-manager")
 - **Addy** → Routes to Swift/Python/TypeScript specialists
 - **Alara** → Routes to design plugin reviewers
 - **Sprint** → Uses Linear MCP, Google Calendar MCP, Notion MCP, and produces handoff inputs for workspace-agent autosprint execution
-- **Ekua-Manager** → Coordinates worker workflows across Claude Code and Codex while keeping the main thread responsible for integration and final decisions
+- **Delivery-Manager** → Coordinates worker workflows across Claude Code and Codex while keeping the main thread responsible for integration and final decisions
 
 ## Version History
 
+- **3.9.0** (2026-07-06): Rename Ekua-Manager skill to Delivery-Manager - the old name collided with the Ekua session agent identity
+  - `company:ekua-manager` -> `company:delivery-manager`; manager contract unchanged
+  - Merge step: a user hold or merge-freeze directive (direct or relayed through another agent) revokes standing merge authority until explicitly lifted; managers verify PR merge state against the directive instead of trusting the relay
 - **3.8.2** (2026-06-19): Package Ekua-Manager for Claude Code and Codex
   - Added `company:ekua-manager` skill to the Company plugin harness
   - Published the manager workflow through Claude and Codex plugin manifests

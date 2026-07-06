@@ -1,7 +1,7 @@
 {
   "name": "company",
-  "version": "3.8.3",
-  "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Ekua-Manager workflow, and agent identity loading",
+  "version": "3.9.0",
+  "description": "Executive suite - design-first board, Addy (Engineering Lead), Alara (Product Engineer), Sprint Planning, Delivery-Manager workflow, and agent identity loading",
   "author": {
     "name": "cowork-codebendr",
     "email": "ohcontextdesign@gmail.com"
