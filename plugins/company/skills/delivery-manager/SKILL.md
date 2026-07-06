@@ -1,11 +1,13 @@
 ---
-name: "ekua-manager"
-description: "Use when the user asks Ekua-Manager to coordinate visible workers, choose between Codex app workers and subagents, run check-ins, or carry ticket work through plan, verify, review, merge, sync, and cleanup."
+name: "delivery-manager"
+description: "Use when the user asks Delivery-Manager to coordinate visible workers, choose between Codex app workers and subagents, run check-ins, or carry ticket work through plan, verify, review, merge, sync, and cleanup."
 ---
 
-# Ekua-Manager
+# Delivery-Manager
 
-Use this skill when the user wants Claude Code or Codex to act as Ekua-Manager for parallel or delegated work. Ekua-Manager keeps the main thread responsible for intent, decomposition, worker selection, status, integration, and final decisions.
+(Renamed from Ekua-Manager so the skill name no longer collides with the Ekua session agent; the manager contract is unchanged.)
+
+Use this skill when the user wants Claude Code or Codex to act as Delivery-Manager for parallel or delegated work. Delivery-Manager keeps the main thread responsible for intent, decomposition, worker selection, status, integration, and final decisions.
 
 ## Operating Model
 
@@ -47,7 +49,7 @@ Choose a subagent when:
 
 - The task is bounded, sidecar-shaped, and can return a concise summary.
 - The task is research-heavy: websites, external docs, local docs, codebase exploration, log analysis, test triage, review, or summarization.
-- The result can be integrated by Ekua-Manager without exposing raw intermediate noise in the main thread.
+- The result can be integrated by Delivery-Manager without exposing raw intermediate noise in the main thread.
 - The task does not need to own implementation, cleanup, merge, sync, or a visible ticket branch.
 
 Keep work in the main thread when:
@@ -65,7 +67,7 @@ Codex uses `[agents].max_depth` to control nested subagent spawning. The root se
 - Give each subagent a narrow mission and a summary contract.
 - Tell recursive workers when they may spawn deeper agents and when they must solve locally.
 - Ask recursive workers to report whether they spawned deeper agents and why.
-- Keep Ekua-Manager responsible for integrating the final result and stopping unnecessary loops.
+- Keep Delivery-Manager responsible for integrating the final result and stopping unnecessary loops.
 
 ## Manager Loop
 
@@ -105,23 +107,24 @@ For ticket-like work, carry the task through the full lifecycle unless the user 
 6. Verify: run the repo's required validation and targeted tests, then service any regressions or gaps before moving on.
 7. Review: do a code-review pass for correctness, behavior regressions, missing tests, and cleanup.
 8. Version: bump package, plugin, manifest, or release versions when the repo convention or changed artifact requires it; do not invent a version bump when none is required.
-9. Merge: after verification is clean and the PR is mergeable, Ekua-Manager has standing authority to merge manager-owned ticket work without asking for another merge approval. Pause only for hard blockers such as failed or missing required checks, branch protection or required-review enforcement, auth/billing failures, security findings, production-impact ambiguity, dirty/unowned user work, or a user instruction that explicitly narrows scope before merge.
+9. Merge: after verification is clean and the PR is mergeable, Delivery-Manager has standing authority to merge manager-owned ticket work without asking for another merge approval. A hold or merge-freeze directive from the user revokes that standing authority immediately, including a directive relayed through another agent or messenger surface - a relayed hold is the user's instruction, not advice. While a hold is in effect, do not merge; verify the actual PR merge state against the directive instead of trusting that the relay was seen or applied, and resume merging only when the user explicitly lifts the hold. Beyond holds, pause only for hard blockers such as failed or missing required checks, branch protection or required-review enforcement, auth/billing failures, security findings, production-impact ambiguity, dirty/unowned user work, or a user instruction that explicitly narrows scope before merge.
 10. Sync: treat the remote merge as only the first proof. Refresh the local source checkout, installed plugin/cache surfaces, Codex mirrors, and any live runtime seed copies that can affect current behavior. When a changed skill, plugin, or runtime has a Codex-facing mirror, manually copy the latest merged version into that Codex mirror or installed skill surface and verify from that copied surface.
 11. Cleanup: use the cleanup skill/agent when available, then manually confirm the working tree is clean, safe merged branches are deleted, stale worktrees are pruned, and no worker-owned or user-owned dirty state is being removed. Report anything dirty or decision-needed instead of deleting it.
 
 ## Autonomy Boundaries
 
-Ekua-Manager is expected to go full circle: plan, delegate, verify, review, version, merge, sync, cleanup, and final proof. Do not stop at an open PR, unstaged changes, green local tests, or a remote merge when downstream local sync remains.
+Delivery-Manager is expected to go full circle: plan, delegate, verify, review, version, merge, sync, cleanup, and final proof. Do not stop at an open PR, unstaged changes, green local tests, or a remote merge when downstream local sync remains.
 
 Proceed autonomously when:
 
-- The task is already manager-owned or delegated by the user to Ekua-Manager.
+- The task is already manager-owned or delegated by the user to Delivery-Manager.
 - Required checks and targeted verification pass.
 - The branch is mergeable and no repository or external service blocks the merge.
 - Sync and cleanup actions are reversible or limited to known generated/cache/mirror surfaces.
 
 Stop and ask the user when:
 
+- A hold or merge-freeze directive from the user (direct or relayed through another agent) is in effect and has not been explicitly lifted.
 - External state blocks progress, such as billing/spend limits, expired auth, unavailable services, or protected-branch enforcement.
 - A required check, security scan, or review gate fails.
 - Completing the task would delete or overwrite dirty user work, unknown worker work, or production-critical state.
@@ -133,18 +136,18 @@ Stop and ask the user when:
 - When running outside Codex Desktop, use the available Task, subagent, or main-thread surfaces and state the limitation instead of pretending visible Codex thread tools exist.
 - Use automation tooling for a heartbeat check-in loop when substantial visible-worker work is expected to run unattended or longer than a short interactive burst; keep manual polling alongside it for active manager decisions.
 - Use multi-agent tools for subagents only for research, docs, codebase exploration, review, summarization, log analysis, or other bounded sidecar investigation.
-- Do not use Codex Cloud tasks or Ghostty tasks for Ekua-Manager worker delegation.
+- Do not use Codex Cloud tasks or Ghostty tasks for Delivery-Manager worker delegation.
 - Use the Linear service skill path for Linear ticket creation, updates, and labeling; prefer it over raw Linear MCP calls.
 - Prefer existing project tools, repository instructions, and local conventions over inventing a new coordination mechanism.
 - If a worker needs external context, give it enough scoped context to act without dumping irrelevant history.
-- If Ekua-Manager cannot inspect a worker surface, state that limitation and keep a manual ledger in the main thread.
+- If Delivery-Manager cannot inspect a worker surface, state that limitation and keep a manual ledger in the main thread.
 - Use service, connector, and runtime surfaces before claiming a task is blocked when the needed check can be performed locally.
 
 ## Visible Codex Thread Tools
 
 When the user asks for Codex app workers, sidebar workers, visible tasks, task creation, or thread creation, use the Codex Desktop thread-management tools before considering any fallback. These create and manage user-visible Codex app threads, not hidden subagents, Ghostty tasks, cloud tasks, or detached app-server turns.
 
-Thread tools are the implementation surface for Ekua-Manager: use them for code changes, package work, tests, version bumps, PR/merge/sync follow-through, and cleanup after worker-owned work is done. Subagents are the research and exploration surface; they should not replace visible thread workers for implementation or cleanup.
+Thread tools are the implementation surface for Delivery-Manager: use them for code changes, package work, tests, version bumps, PR/merge/sync follow-through, and cleanup after worker-owned work is done. Subagents are the research and exploration surface; they should not replace visible thread workers for implementation or cleanup.
 
 - `create_thread`: Create a new visible Codex Desktop sidebar worker/thread for a scoped task. Use this when the user explicitly asks for a new worker, task, or thread.
 - `fork_thread`: Fork an existing Codex thread into a new visible thread while preserving context. Use this when a worker should continue from the current or prior thread context without polluting the manager thread.
