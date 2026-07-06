@@ -110,6 +110,7 @@ Skill("company:delivery-manager")
 
 ## Version History
 
+- **3.9.1** (2026-07-06): Delivery-Manager picks its worker surface by runtime - Claude Code uses the manager workflow (subagents, background agents, workflow orchestration); Codex uses the Desktop thread-creation tools
 - **3.9.0** (2026-07-06): Rename Ekua-Manager skill to Delivery-Manager - the old name collided with the Ekua session agent identity
   - `company:ekua-manager` -> `company:delivery-manager`; manager contract unchanged
   - Merge step: a user hold or merge-freeze directive (direct or relayed through another agent) revokes standing merge authority until explicitly lifted; managers verify PR merge state against the directive instead of trusting the relay

@@ -12,6 +12,7 @@ Use this skill when the user wants Claude Code or Codex to act as Delivery-Manag
 ## Operating Model
 
 1. Establish the management surface.
+   - Identify the runtime first. In Claude Code, delegated work runs through the manager workflow surface: subagents, background agents, and workflow orchestration - Codex Desktop thread tools do not exist there. In Codex, visible workers run through the Codex Desktop thread-creation tools.
    - Identify whether the user asked for visible workers, subagents, or both.
    - If the user asks for workers, tasks, sidebar visibility, monitorable progress, restart continuity, or a Codex app surface, use visible Codex app workers.
    - If the user explicitly asks for subagents, parallel agents, delegation, or recursive loop work, subagents are allowed for bounded sidecar tasks.
@@ -133,7 +134,7 @@ Stop and ask the user when:
 ## Tooling Expectations
 
 - Use thread-management tools for visible Codex app workers when the user asks for a visible task or sidebar worker.
-- When running outside Codex Desktop, use the available Task, subagent, or main-thread surfaces and state the limitation instead of pretending visible Codex thread tools exist.
+- In Claude Code, use the manager workflow surface (Task/subagents, background agents, workflow orchestration) for delegated work, and state that visible Codex thread tools are unavailable instead of pretending they exist. In Codex Desktop, use the thread-management tools for visible workers.
 - Use automation tooling for a heartbeat check-in loop when substantial visible-worker work is expected to run unattended or longer than a short interactive burst; keep manual polling alongside it for active manager decisions.
 - Use multi-agent tools for subagents only for research, docs, codebase exploration, review, summarization, log analysis, or other bounded sidecar investigation.
 - Do not use Codex Cloud tasks or Ghostty tasks for Delivery-Manager worker delegation.
@@ -145,7 +146,7 @@ Stop and ask the user when:
 
 ## Visible Codex Thread Tools
 
-When the user asks for Codex app workers, sidebar workers, visible tasks, task creation, or thread creation, use the Codex Desktop thread-management tools before considering any fallback. These create and manage user-visible Codex app threads, not hidden subagents, Ghostty tasks, cloud tasks, or detached app-server turns.
+These tools exist only in the Codex runtime; in Claude Code the equivalent implementation surface is the manager workflow (subagents and background tasks). When the user asks for Codex app workers, sidebar workers, visible tasks, task creation, or thread creation, use the Codex Desktop thread-management tools before considering any fallback. These create and manage user-visible Codex app threads, not hidden subagents, Ghostty tasks, cloud tasks, or detached app-server turns.
 
 Thread tools are the implementation surface for Delivery-Manager: use them for code changes, package work, tests, version bumps, PR/merge/sync follow-through, and cleanup after worker-owned work is done. Subagents are the research and exploration surface; they should not replace visible thread workers for implementation or cleanup.
 
