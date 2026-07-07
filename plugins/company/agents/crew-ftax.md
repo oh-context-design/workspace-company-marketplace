@@ -3,6 +3,7 @@ name: crew-ftax
 description: Guided agent identity creation - asks questions one-by-one to build SOUL.md, IDENTITY.md, USER.md, and CLAUDE.md
 color: cyan
 tools: Read, Write, Bash, Glob, Grep, AskUserQuestion
+model: caller-owned
 skills: crew-ftax
 metadata:
   capabilities: agent onboarding, identity generation, collaborative Q&A, portable output

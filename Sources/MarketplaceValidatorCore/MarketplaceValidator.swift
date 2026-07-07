@@ -112,6 +112,7 @@ public struct ParsedFrontmatter {
 
 public enum FrontmatterValidator {
     static let validColors: Set<String> = ["blue", "green", "yellow", "red", "orange", "purple", "cyan", "pink"]
+    static let allowedModels: Set<String> = ["haiku", "sonnet", "opus", "caller-owned"]
     static let agentFields: Set<String> = ["name", "description", "color", "tools", "skills", "context", "hooks", "model", "metadata", "memory", "isolation", "background"]
     static let commandFields: Set<String> = ["name", "description", "allowed-tools", "argument-hint", "skills", "metadata"]
     static let skillFields: Set<String> = ["name", "description", "allowed-tools", "context", "agent", "user-invocable", "metadata", "disable-model-invocation"]
@@ -226,6 +227,16 @@ public enum FrontmatterValidator {
 
         for field in ["name", "description", "color", "tools"] where frontmatter[field] == nil {
             errors.append(FrontmatterIssue(file: filePath, line: 1, message: "Missing required field '\(field)'", field: field))
+        }
+
+        if let model = frontmatter["model"] as? String {
+            if model == "inherit" {
+                errors.append(FrontmatterIssue(file: filePath, line: 1, message: "model: inherit is banned - pin a real tier (haiku/sonnet/opus) or declare model: caller-owned", field: "model"))
+            } else if !allowedModels.contains(model) {
+                errors.append(FrontmatterIssue(file: filePath, line: 1, message: "Invalid model '\(model)'. Valid: \(allowedModels.sorted().joined(separator: ", "))", field: "model"))
+            }
+        } else {
+            errors.append(FrontmatterIssue(file: filePath, line: 1, message: "Missing required field 'model' - pin a tier (haiku/sonnet/opus) or declare model: caller-owned", field: "model"))
         }
 
         if frontmatter["skills"] == nil {

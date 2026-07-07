@@ -2,6 +2,7 @@
 name: company-board
 description: Design-first executive council - CDO leads, CEO/CTO/CFO support
 tools: Task, Read, Grep, Glob, WebSearch, Bash
+model: opus
 color: cyan
 skills: strategic-framework
 metadata:

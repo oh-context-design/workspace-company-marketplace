@@ -29,6 +29,7 @@ final class FrontmatterValidatorTests: XCTestCase {
             "tools": "Read, Write",
             "skills": "test-skill",
             "metadata": ["capabilities": "[testing]"],
+            "model": "sonnet",
         ]
         let result = FrontmatterValidator.validateAgent(fields, filePath: "plugins/p/agents/a.md", body: "")
         XCTAssertTrue(result.errors.isEmpty)
