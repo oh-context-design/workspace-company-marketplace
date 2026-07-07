@@ -2,6 +2,7 @@
 name: company-addy-engineering-lead
 description: Engineering Lead - force multiplier, engineering excellence, partners with Alara
 tools: Task, Read, Grep, Glob, Bash, TeamCreate, TeamDelete, SendMessage, TaskCreate, TaskUpdate, TaskList
+model: opus
 color: blue
 memory: project
 skills: codex, strategic-framework, worktree, cursor, idea-refine, spec-driven-development, interview-me

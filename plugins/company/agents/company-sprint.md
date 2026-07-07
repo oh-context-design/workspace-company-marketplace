@@ -3,6 +3,7 @@ name: company-sprint
 description: Acts as a Scrum Master to classify sprint issues, provide estimates, run biweekly sprint planning, track velocity, and manage cycle operations. Use for any sprint-related work including classification, planning, status checks, and retrospectives.
 color: yellow
 tools: Read, Write, Edit, AskUserQuestion
+model: caller-owned
 memory: project
 skills: sprint-master, sprint-planning
 metadata:
